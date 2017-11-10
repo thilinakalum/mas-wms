@@ -1,0 +1,195 @@
+<div class="bt border-primary">
+
+    <div class="col-lg-3" style="background-color: #ffffff">
+        <div class="row text-center" style="height: 40px; background-color: #2b8ec2; color: white;font-size: 20px;padding-top: 4px;">JOBS</div>
+        <div style="margin-top: 15px;height: calc(100vh - 111px)">
+            <div class="input-group input-group-md">
+                <input type="text" class="form-control" placeholder="Search by category & department" >
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                </span>
+            </div>
+            <div class="smart-scroll-y" style="height: calc(100vh - 160px)">
+                <table class="table table-hover" style="margin-top: 20px">
+                    <tbody>
+                        <tr ng-repeat="jobs in model.newJobList| filter:{name:model.search.indexNo} | orderBy:'indexNo' ">
+                            <td class="col-sm-3" ng-click="ui.setDescription(jobs , $index)" ng-class="ui.selectedJobIndex === jobs.indexNo ? 'selected' : ''">
+                                <label class="control-label" style="margin-top: 5px">Job No : <span class="label label-info">{{jobs.indexNo}}</span></label>    
+                                <label class="control-label" style="margin-top: 5px">Status : <span><label class="control-label label-danger">{{jobs.status}}</label></span></label><br>
+                                <label class="control-label" style="margin-top: 5px">Required Date : {{jobs.requiredDate|date:'yyyy-MM-dd'}}</label><br>
+                                <label class="control-label" style="margin-top: 5px">Required Time : {{jobs.requiredTime|date:'h:mma'}}</label><br>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 bg-default-light">
+        <div class="row text-center" style="height: 40px; background-color: #2b5f92; color: white;font-size: 20px;padding-top: 4px;">ASSING JOBS</div>
+        <uib-tabset type="pills" active="active">
+            <uib-tab heading="JOB DETAILS" index="0">
+                <div style="height: calc(100vh - 620px)">
+                    <table class="table">
+                        <tbody style="background-color: #ffffff">
+                            <tr>
+                                <td class="col-sm-12">
+                                    <label class="control-label" > Description :</label>
+                                    <textarea style="font-size: 20px" rows="3" cols="52" ng-model="description"></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <table class="table ">
+                        <col style="width: 25%">
+                        <col style="width: 55%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <thead style="background-color: #eeeeee">
+                            <tr>
+                                <td>Name</td> 
+                                <td>Work Description</td> 
+                                <td>Status</td> 
+                                <td>&nbsp;</td>
+                            </tr>
+                        </thead>
+                        <tbody class="smart-scroll-y">
+                        <col style="width: 25%">
+                        <col style="width: 55%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <tr ng-repeat="jobDetails in model.jobDetailList">
+                            <td>{{model.employeeLable(jobDetails.employee)}}</td>
+                            <td>{{jobDetails.adminDescription}}</td>
+                            <td>{{jobDetails.status}}</td>
+                            <td>
+                                <span class="input-group-btn" >
+                                    <a class="btn btn-xs btn-danger" ng-click="ui.edit(subCategory, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a class="btn btn-xs btn-primary" ng-click="ui.edit(subCategory, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </uib-tab>
+            <uib-tab heading="JOB ITEMS" index="1">
+                <div style="height: calc(100vh - 215px)">
+                    <div>
+                        <table class="table table-hover">
+                            <col style="width: 25%">
+                            <col style="width: 65%">
+                            <col style="width: 10%">
+                            <thead style="background-color: #eeeeee">
+                                <tr>
+                                    <td>Name</td> 
+                                    <td>Work Description</td> 
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </thead>
+                            <tbody class="smart-scroll-y">
+                            <col style="width: 25%">
+                            <col style="width: 65%">
+                            <col style="width: 10%">
+                            <tr ng-repeat="jobDetails in model.jobDetailList" ng-click="ui.selectedJobDetails(jobDetails)" ng-class=" ui.selectedDetailIndex === jobDetails.indexNo ? 'selected' : ''" >
+                                <td>{{model.employeeLable(jobDetails.employee)}}</td>
+                                <td>{{jobDetails.adminDescription}}</td>
+                                <td>
+                                    <span class="input-group-btn" >
+                                        <a class="btn btn-xs btn-danger" ng-click="ui.edit(subCategory, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a class="btn btn-xs btn-primary" ng-click="ui.edit(subCategory, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="smart-scroll-y" style="height: calc(100vh - 465px);">
+                        <table class="table table-hover" style="margin-bottom: 0px;">
+                            <col style="width: 25%">
+                            <col style="width: 35%">
+                            <col style="width: 20%">
+                            <col style="width: 10%">
+                            <thead style="background-color: #eeeeee">
+                                <tr>
+                                    <td>Item</td> 
+                                    <td>Qty</td> 
+                                    <td>price ( Rs: )</td> 
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table class="table table-hover">
+                            <col style="width: 25%">
+                            <col style="width: 40%">
+                            <col style="width: 20%">
+                            <col style="width: 10%">
+                            <tbody>
+                                <tr ng-repeat="jobItems in model.jobItemList">
+                                    <td>{{model.itemLable(jobItems.item)}}</td>
+                                    <td>{{jobItems.qty}}</td>
+                                    <td>{{jobItems.unitPrice}}</td>
+                                    <td>
+                                        <span class="input-group-btn" >
+                                            <a class="btn btn-xs btn-danger" ng-click="ui.edit(subCategory, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                                            <a class="btn btn-xs btn-primary" ng-click="ui.edit(subCategory, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <table class="table table-hover">
+                    <col style="width: 65%">
+                    <col style="width: 35%">
+
+                    <thead style="background-color: #eeeeee">
+                        <tr>
+                            <td>
+                                <label class="control-label label-lg" style="font-size: 20px;margin-top: 5px"> Total Price </label>   
+                            </td> 
+                            <td>
+                                <label class="control-label label-lg" style="font-size: 20px;margin-top: 5px">RS : {{model.totalItemPrice}} </label>
+                            </td> 
+                        </tr>
+                    </thead>
+                </table>
+            </uib-tab>
+        </uib-tabset>
+    </div>  
+</div>
+<div class="col-lg-3">
+    <div class="row text-center" style="height: 40px; background-color: #2b8ec2; color: white;font-size: 20px;padding-top: 4px;">JOBS HISTORY</div>
+    <div style="margin-top: 15px;height: calc(100vh - 200px)">
+        <table class="table table-condensed " >
+            <tbody>
+                <tr>
+                    <td class="col-sm-3">
+                        <label for="type" class="control-label" style="margin-top: 9px">Job No  :  001</label><br>
+                        <label for="type" class="control-label" style="margin-top: 9px">Department  :  Accounting </label><br>
+                        <label for="type" class="control-label" style="margin-top: 9px">Sender  :  Oshada</label><br>
+                        <label for="type" class="control-label" style="margin-top: 9px">Status  :  New</label><br>
+                        <label for="type" class="control-label" style="margin-top: 9px">Send Date  :  2017/10/01</label><br>
+                        <label for="type" class="control-label" style="margin-top: 9px">Required Date  :  2017/10/07</label><br>
+                        <label for="type" class="control-label" style="margin-top: 9px">Required Time  :  12.00pm </label><br>
+                        <label for="type" class="control-label" style="margin-top: 9px">deadline Date  :  </label><br>
+                        <label for="type" class="control-label" style="margin-top: 9px">deadline Time  :  </label><br>
+                        <label for="type" class="control-label" style="margin-top: 9px">Job Category  :  category 1</label><br>
+                        <label for="type" class="control-label" style="margin-top: 9px">Worker Name  :  </label><br>
+                        <label for="type" class="control-label" style="margin-top: 9px">Job desc  :  Desc</label><br>
+                        <label for="type" class="control-label" style="margin-top: 9px">Job Items  :  </label><br>
+                    </td>
+                </tr>  
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <span class="input-group-btn" >
+            <button ng-click="ui.sendDepartment()" class="col-lg-12 btn btn-success btn-md pull-right" style="height: 80px" type="button"><i class="glyphicon glyphicon-floppy-saved"></i><br>Send Department</button>
+        </span>
+    </div>
+</div>
+

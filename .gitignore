@@ -1,0 +1,9 @@
+WorkflowMannagementSystem/target/
+WorkflowMannagementSystem/node_modules/
+WorkflowMannagementSystem/bower_components/
+WorkflowMannagementSystem/src/main/resources/static/
+WorkflowMannagementSystem/debug.log
+WorkflowMannagementSystem/src/main/resources/META-INF/persistence.xml
+WorkflowMannagementSystem/src/site/index.html
+WorkflowMannagementSystem/upload-image
+WorkflowMannagementSystem/.idea
