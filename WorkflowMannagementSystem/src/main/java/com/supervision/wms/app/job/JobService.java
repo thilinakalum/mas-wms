@@ -7,6 +7,7 @@ package com.supervision.wms.app.job;
 
 import com.supervision.wms.app.job.model.Job;
 import com.supervision.wms.app.job_tansaction.JobTransactionRepository;
+import com.supervision.wms.app.job_tansaction.JobTransactionService;
 import com.supervision.wms.app.job_tansaction.model.JobTransaction;
 import java.util.Date;
 import java.util.List;
@@ -25,20 +26,19 @@ public class JobService {
 
     @Autowired
     private JobRepository jobRepository;
-    
+
     @Autowired
-    private JobTransactionRepository jobTransactionRepository;
-    
+    private JobTransactionService jobTransactionService;
+
     public List<Job> getAllJobs() {
         return jobRepository.findAll();
     }
-    
-    @Transactional
+
     public Job saveJobs(Job job) {
         JobTransaction jobTransaction = new JobTransaction();
-        
+
         Job job1 = jobRepository.save(job);
-        
+
         jobTransaction.setUser(job1.getUser());
         jobTransaction.setStatus(job1.getStatus());
         jobTransaction.setDescription(job1.getClientDescription());
@@ -47,15 +47,14 @@ public class JobService {
         jobTransaction.setDate(new Date());
         jobTransaction.setTime(new Date());
 
-        jobTransactionRepository.save(jobTransaction);
-
+        jobTransactionService.saveTransAction(jobTransaction);
         return job1;
     }
 
     public List<Job> getAllNewJobs() {
         return jobRepository.getAllNewJobs();
     }
-    
+
     public List<Job> getAllJobsByDepartmentAndNew(Integer user) {
         return jobRepository.getAllJobsByDepartmentAndNew(user);
     }
@@ -75,7 +74,7 @@ public class JobService {
     public List<Job> getAllJobsByDepartmentAndAssign(int user) {
         return jobRepository.getAllJobsByDepartmentAndAssign(user);
     }
-    
+
     public List<Job> getAllJobsIfFinishJobDetail() {
         return jobRepository.getAllJobsIfFinishJobDetail();
     }
@@ -89,7 +88,11 @@ public class JobService {
     }
 
     public List<Job> getAllJobsByFinish(int user) {
-         return jobRepository.getAllJobsByFinish(user);
+        return jobRepository.getAllJobsByFinish(user);
     }
-    
+
+    public List<Job> getAllJobsByStatsFinish() {
+        return jobRepository.getAllJobsByStatus("FINISH");
+    }
+
 }

@@ -1,44 +1,17 @@
-<div class="bt border-primary">
-    <div class="col-lg-3" style="background-color: #ffffff">
-        <div class="row text-center" style="height: 40px; background-color: #2b8ec2; color: white;font-size: 20px;padding-top: 4px;">JOBS</div>
-        <div style="margin-top: 15px;height: calc(100vh - 111px)">
-            <div class="input-group input-group-md">
-                <input type="text" class="form-control" placeholder="Search by category & department" >
-                <span class="input-group-btn">
-                    <button class="btn btn-primary" type="button"><i class="glyphicon glyphicon-search"></i></button>
-                </span>
-            </div>
-            <div class="smart-scroll-y" style="height: calc(100vh - 160px)">
-                <table class="table table-hover" style="margin-top: 20px">
-                    <tbody>
-                        <tr ng-repeat="jobs in model.newJobList| filter:{name:model.search.indexNo} | orderBy:'indexNo' ">
-                            <td class="col-sm-3" ng-click="ui.setDescription(jobs, $index)" ng-class="ui.selectedJobIndex === jobs.indexNo ? 'selected' : ''">
-                                <label class="control-label" style="margin-top: 5px">Job No : <span class="label label-info">{{jobs.indexNo}}</span></label>    
-                                <label class="control-label" style="margin-top: 5px">Status : <span><label class="control-label label-danger">{{jobs.status}}</label></span></label><br>
-                                <label class="control-label" style="margin-top: 5px">Deadline Date : {{jobs.deadlineDate|date:'yyyy-MM-dd'}}</label><br>
-                                <label class="control-label" style="margin-top: 5px">Deadline Time : {{jobs.deadlineTime|date:'h:mma'}}</label><br>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 bg-default-light">
-        <div class="row text-center" style="height: 40px; background-color: #2b5f92; color: white;font-size: 20px;padding-top: 4px;">ASSING JOBS</div>
-        <div style="height: calc(100vh - 450px)">
+
+<!--        <div style="height: calc(100vh - 450px)">
             <table class="table">
                 <tbody style="background-color: #ffffff">
                     <tr>
-                        <td class="col-sm-12">
+                        <td class="col-md-12">
                             <label class="control-label" > Description :</label>
-                            <textarea style="font-size: 20px" readonly="true" rows="3" cols="52" ng-model="model.jobDetailData.description" ></textarea>
+                            <textarea class="form-control" style="font-size: 20px; height: 13vh" readonly="true" ng-model="model.jobDetailData.description" ></textarea>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <div class="col-sm-12" style="height: 145px;background-color: white">
-                <div class="col-sm-6" style="display: block;">
+            <div class="col-md-12" style="height: 145px;background-color: white">
+                <div class="col-md-6" style="display: block;">
                     <div style="margin-top: 8px">
                         <label class="control-label">Employee </label>
                         <input type="text" class="form-control" readonly="true" ng-model="model.jobDetailData.employee" uib-typeahead="employee.indexNo as (employee.indexNo + ' - ' + employee.name) for employee in model.employeeList |filter:$viewValue|limitTo:10" typeahead-input-formatter="ui.employeeLabel(model.jobDetailData.employee);">
@@ -48,53 +21,50 @@
                         <input type="text" class="form-control" readonly="true" ng-model="model.jobDetailData.deadlineDate">
                     </div>
                 </div>
-                <div class="col-sm-6" style="margin-top: 8px">
+                <div class="col-md-6" style="display: block;">
                     <div style="margin-top: 8px">
                         <label class="control-label">Deadline Time :</label>
                         <input type="text" class="form-control" readonly="true" ng-model="model.jobDetailData.deadlineTime">
                     </div>
-                    <button type="button" class="col-sm-4 btn btn-info btn-sm " style="margin-top: 24px;border-radius: 0px" ng-click="ui.addItems()">
+                    <button type="button" class="col-md-4 btn btn-info btn-md " ng-disabled="ui.mode !== 'select'" style="margin-top: 36px;border-radius: 0px" ng-click="ui.addItems()">
                         <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Add Items
                     </button>
-<!--                    <button type="button" class=" col-sm-4 btn btn-warning btn-sm " style="margin-top: 24px;border-radius: 0px" ng-click="ui.clear()">
-                        <span class="glyphicon glyphicon-refresh" aria-hidden="true" ></span> Clear
-                    </button>
-                    <button type="button" class="col-sm-4 btn btn-success btn-sm " style="margin-top: 24px;border-radius: 0px" ng-click="ui.saveJobDetail()">
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Assign Job
-                    </button>-->
                 </div>
             </div> 
         </div>
         <div ng-show="ui.addItem">
-        <table class="table">
-            <tbody>
-                <tr style="background-color: #ffffff">
-                    <td class="col-sm-3">
-                        <label class="control-label"  style="margin-top: 9px" >Item :</label>
-                        <input type="text" class="form-control" ng-model="model.adminJobItemData.item" 
-                               uib-typeahead="items.indexNo as (items.indexNo + ' - ' + items.name) for items in model.itemList |filter:$viewValue|limitTo:10"
-                               typeahead-input-formatter="ui.itemLable(model.adminJobItemData.item);" 
-                               typeahead-on-select='ui.onSelect($model)'>
-                    </td>
-                    <td class="col-sm-5">
-                        <div class="input-group input-group-md">
-                            <label class="control-label" style="margin-top: 9px">Qty :</label>
-                            <input type="text" class="form-control" ng-model="model.adminJobItemData.qty">
-                        </div>
-                    </td>
-                    <td class="col-sm-4">
-                        <div class="input-group input-group-md">
-                            <label class="control-label" style="margin-top: 9px">Unit Price:</label>
-                            <input type="text" class="form-control" ng-model="model.adminJobItemData.unitPrice">
+            <form ng-submit='ui.saveJobItems()'>
+                <table class="table">
+                    <tbody>
+                        <tr style="background-color: #ffffff">
+                            <td class="col-md-3">
+                                <label class="control-label"  style="margin-top: 9px" >Item :</label>
+                                <input type="text" required class="form-control" ng-model="model.adminJobItemData.item" 
+                                       uib-typeahead="items.indexNo as (items.indexNo + ' - ' + items.name) for items in model.itemList |filter:$viewValue|limitTo:10"
+                                       typeahead-input-formatter="ui.itemLable(model.adminJobItemData.item);" 
+                                       typeahead-on-select='ui.onSelect($model)'
+                                       typeahead-editable='false'>
+                            </td>
+                            <td class="col-md-5">
+                                <div class="input-group input-group-md">
+                                    <label class="control-label" style="margin-top: 9px">Qty :</label>
+                                    <input type="number" required class="form-control" ng-model="model.adminJobItemData.qty">
+                                </div>
+                            </td>
+                            <td class="col-md-4">
+                                <div class="input-group input-group-md">
+                                    <label class="control-label" style="margin-top: 9px">Unit Price:</label>
+                                    <input type="text" required class="form-control" ng-model="model.adminJobItemData.unitPrice">
 
-                            <span class="input-group-btn" >
-                                <button ng-click="ui.saveJobItems();" class="btn btn-success btn-md pull-right" style="margin-top:31px; margin-left: 20px" type="button"><i class="glyphicon glyphicon-plus-sign"></i></button>
-                            </span>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                                    <span class="input-group-btn" >
+                                        <button type="submit" class="btn btn-success btn-md pull-right" style="margin-top:31px; margin-left: 20px" ><i class="glyphicon glyphicon-plus-sign"></i></button>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
         <div class="smart-scroll-y" style="height: calc(100vh - 525px);">
             <table class="table table-hover" style="margin-bottom: 0px;">
@@ -121,47 +91,184 @@
                         <td>{{ui.itemLable(jobItems.item)}}</td>
                         <td>{{jobItems.qty}}</td>
                         <td>{{jobItems.unitPrice}}</td>
-                        <td>
-<!--                            <span class="input-group-btn" >
-                                <a class="btn btn-xs btn-danger" ng-click="ui.edit(subCategory, $index)"><span class="glyphicon glyphicon-edit"></span></a>
-                                <a class="btn btn-xs btn-primary" ng-click="ui.edit(subCategory, $index)"><span class="glyphicon glyphicon-trash"></span></a>
-                            </span>-->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>-->
+
+
+
+
+
+
+
+<div class="col-md-3 background-blue-dark">
+    <h4 class="text-center background-md-header"> JOBS</h4>
+</div>
+<div class="col-md-6 background-blue-light">
+    <h4 class="text-center background-md-header"> ADMIN NEW</h4>
+</div>
+<div class="col-md-3 background-blue-dark">
+    <h4 class="text-center background-md-header"> JOBS HISTORY</h4>
+</div>
+<div class="col-md-3 background-dark">
+    <div class="padding-top-10" style="height: calc(100vh - 94px);" >
+        <div class="input-group  padding-top-10">
+            <input type="text" class="form-control" placeholder="Search by category & department" >
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="button"><i class="glyphicon glyphicon-search"></i></button>
+            </span>
+        </div>
+        <div class="smart-scroll-y" style="height: calc(100vh - 172px);" ng-show="model.newJobList.length">
+            <table class="table table-hover" style="margin-top: 20px">
+                <tbody>
+                    <tr ng-repeat="jobs in model.newJobList| filter:{name:model.search.indexNo} | orderBy:'indexNo' ">
+                        <td class="col-sm-3" ng-click="ui.setDescription(jobs, $index)" ng-class="ui.selectedJobIndex === jobs.indexNo ? 'selected' : ''">
+                            <label class="control-label" style="margin-top: 5px">Job No : <span class="label label-info">{{jobs.indexNo}}</span></label>    
+                            <label class="control-label" style="margin-top: 5px">Status : <span><label class="control-label label-danger">{{jobs.status}}</label></span></label><br>
+                            <label class="control-label" style="margin-top: 5px">Required Date : {{jobs.requiredDate|date:'yyyy-MM-dd'}}</label><br>
+                            <label class="control-label" style="margin-top: 5px">Required Time : {{jobs.requiredTime|date:'h:mma'}}</label><br>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <div class="hide-area background-dark" style="height: calc(100vh - 172px);" ng-hide="model.newJobList.length">
+            <h1>EMPTY JOBS :(</h1>
+        </div>
     </div>
-    <div class="col-lg-3">
-        <div class="row text-center" style="height: 40px; background-color: #2b8ec2; color: white;font-size: 20px;padding-top: 4px;">JOBS HISTORY</div>
-        <div style="margin-top: 15px;height: calc(100vh - 200px)">
-            <table class="table table-condensed " >
-                <tbody>
+</div>
+<div class="col-md-6 background-white">
+    <div class=" smart-scroll-y padding-top-10" style="height: calc(100vh - 94px);">
+        <div style="height: calc(100vh - 477px)">
+            <table class="table" style="margin-bottom: 0px;">
+                <tbody style="background-color: #ffffff">
                     <tr>
-                        <td class="col-sm-3">
-                            <label for="type" class="control-label" style="margin-top: 9px">Job No  :  001</label><br>
-                            <label for="type" class="control-label" style="margin-top: 9px">Department  :  Accounting </label><br>
-                            <label for="type" class="control-label" style="margin-top: 9px">Sender  :  Oshada</label><br>
-                            <label for="type" class="control-label" style="margin-top: 9px">Status  :  New</label><br>
-                            <label for="type" class="control-label" style="margin-top: 9px">Send Date  :  2017/10/01</label><br>
-                            <label for="type" class="control-label" style="margin-top: 9px">Required Date  :  2017/10/07</label><br>
-                            <label for="type" class="control-label" style="margin-top: 9px">Required Time  :  12.00pm </label><br>
-                            <label for="type" class="control-label" style="margin-top: 9px">deadline Date  :  </label><br>
-                            <label for="type" class="control-label" style="margin-top: 9px">deadline Time  :  </label><br>
-                            <label for="type" class="control-label" style="margin-top: 9px">Job Category  :  category 1</label><br>
-                            <label for="type" class="control-label" style="margin-top: 9px">Worker Name  :  </label><br>
-                            <label for="type" class="control-label" style="margin-top: 9px">Job desc  :  Desc</label><br>
-                            <label for="type" class="control-label" style="margin-top: 9px">Job Items  :  </label><br>
+                        <td class="col-md-12">
+                            <label class="control-label" > Description :</label>
+                            <textarea class="form-control" style="font-size: 20px; height: 13vh" readonly="true" ng-model="model.jobDetailData.description" ></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="col-md-12" style="height: 145px;background-color: white">
+                <div class="col-md-6" style="display: block;">
+                    <div style="margin-top: 8px">
+                        <label class="control-label">Employee </label>
+                        <input type="text" class="form-control" readonly="true" ng-model="model.jobDetailData.employee" uib-typeahead="employee.indexNo as (employee.indexNo + ' - ' + employee.name) for employee in model.employeeList |filter:$viewValue|limitTo:10" typeahead-input-formatter="ui.employeeLabel(model.jobDetailData.employee);">
+                    </div>
+                    <div style="margin-top: 8px">
+                        <label class="control-label" >Deadline Date :</label>
+                        <input type="text" class="form-control" readonly="true" ng-model="model.jobDetailData.deadlineDate">
+                    </div>
+                </div>
+                <div class="col-md-6" style="display: block;">
+                    <div style="margin-top: 8px">
+                        <label class="control-label">Deadline Time :</label>
+                        <input type="text" class="form-control" readonly="true" ng-model="model.jobDetailData.deadlineTime">
+                    </div>
+                    <button type="button" class="col-md-6 btn btn-info btn-md " ng-disabled="ui.mode !== 'select'" style="margin-top: 36px;border-radius: 0px" ng-click="ui.addItems()">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Add Items
+                    </button>
+                </div>
+            </div> 
+        </div>
+        <div ng-show="ui.addItem">
+            <form ng-submit='ui.saveJobItems()'>
+                <table class="table" style="margin-bottom: 0px">
+                    <tbody>
+                        <tr style="background-color: #ffffff">
+                            <td class="col-md-3">
+                                <label class="control-label"  style="margin-top: 9px" >Item :</label>
+                                <input type="text" required class="form-control" ng-model="model.adminJobItemData.item" 
+                                       uib-typeahead="items.indexNo as (items.indexNo + ' - ' + items.name) for items in model.itemList |filter:$viewValue|limitTo:10"
+                                       typeahead-input-formatter="ui.itemLable(model.adminJobItemData.item);" 
+                                       typeahead-on-select='ui.onSelect($model)'
+                                       typeahead-editable='false'>
+                            </td>
+                            <td class="col-md-5">
+                                <div class="input-group input-group-md">
+                                    <label class="control-label" style="margin-top: 9px">Qty :</label>
+                                    <input type="number" required class="form-control" ng-model="model.adminJobItemData.qty">
+                                </div>
+                            </td>
+                            <td class="col-md-4">
+                                <div class="input-group input-group-md">
+                                    <label class="control-label" style="margin-top: 9px">Unit Price:</label>
+                                    <input type="text" required class="form-control" ng-model="model.adminJobItemData.unitPrice">
+
+                                    <span class="input-group-btn" >
+                                        <button type="submit" class="btn btn-success btn-md pull-right" style="margin-top:31px; margin-left: 20px" ><i class="glyphicon glyphicon-plus-sign"></i></button>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div>
+            <table class="table table-hover" style="margin-bottom: 0px;">
+                <col style="width: 25%">
+                <col style="width: 35%">
+                <col style="width: 20%">
+                <col style="width: 10%">
+                <thead style="background-color: #eeeeee">
+                    <tr>
+                        <td>Item</td> 
+                        <td>Qty</td> 
+                        <td>price ( Rs: )</td> 
+                        <td>&nbsp;</td>
+                    </tr>
+                </thead>
+            </table>
+            <div class="smart-scroll-y" style="height: calc(100vh - 462px);" ng-show="model.jobItemList.length">
+                <table class="table table-hover" style="margin-bottom: 0px;">
+                    <col style="width: 25%">
+                    <col style="width: 40%">
+                    <col style="width: 20%">
+                    <col style="width: 10%">
+                    <tbody>
+                        <tr ng-repeat="jobItems in model.jobItemList">
+                            <td>{{ui.itemLable(jobItems.item)}}</td>
+                            <td>{{jobItems.qty}}</td>
+                            <td>{{jobItems.unitPrice}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="hide-area background-dark" style="height: calc(100vh - 462px);" ng-hide="model.jobItemList.length">
+                <h1>EMPTY JOB ITEMS TO DISPLAY :(</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-3 background-dark">
+    <div class="padding-top-10 " style="height: calc(100vh - 176px);" >
+        <div class="smart-scroll-y" style="height: calc(100vh - 222px);" ng-show="model.transactionList.length">
+            <table class="table table-condensed" >
+                <tbody>
+                    <tr ng-repeat="jobTrans in model.transactionList| orderBy:'indexNo'">
+                        <td>
+                            <label class="label label-info" style="margin-top: 5px">Transaction No : <span class="control-label label-warning">{{jobTrans.indexNo|fixedLength:5}}</span></label>    
+                            <label class="label label-info" style="margin-top: 5px">Status : <span><label class="control-label label-danger">{{jobTrans.status}}</label></span></label><br>
+                            <label class="label label-info" style="margin-top: 5px">Date : {{jobTrans.date|date:'yyyy-MM-dd'}}</label>
+                            <label class="label label-info" style="margin-top: 5px">Time : {{jobTrans.time|date:'h:mma'}}</label><br>
+                            <label class="label label-info" style="margin-top: 5px">User : {{model.employeeLable(jobTrans.user)}}</label><br>
                         </td>
                     </tr>  
                 </tbody>
             </table>
         </div>
-        <div>
-            <span class="input-group-btn" >
-                <button ng-click="ui.finishJob()" class="col-lg-12 btn btn-success btn-md pull-right" style="height: 80px" type="button"><i class="glyphicon glyphicon-floppy-saved"></i><br>Job Finish</button>
-            </span>
+        <div class="hide-area background-dark" style="height: calc(100vh - 222px);" ng-hide="model.transactionList.length">
+            <h1>EMPTY JOB HISTORY :(</h1>
         </div>
+    </div>
+    <div>
+        <span class="input-group-btn" >
+            <button ng-click="ui.finishJob()" class="col-lg-12 btn btn-success btn-md pull-right" style="height: 80px" type="button"><i class="glyphicon glyphicon-floppy-saved"></i><br>Job Finish</button>
+        </span>
     </div>
 </div>
 

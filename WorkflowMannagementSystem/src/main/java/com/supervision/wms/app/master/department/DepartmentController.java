@@ -9,6 +9,7 @@ import com.supervision.wms.app.master.department.model.Department;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,5 +35,9 @@ public class DepartmentController {
     public Department saveDepartment(@RequestBody Department department){
         department.setBranch(1);
         return departmentService.saveDepartment(department);
+    }
+    @RequestMapping(value = "/delete-department/{indexNo}" , method = RequestMethod.DELETE)
+    public void deleteDepartment(@PathVariable Integer indexNo){
+        departmentService.deleteDepartment(indexNo);
     }
 }

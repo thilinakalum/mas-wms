@@ -6,6 +6,7 @@
 package com.supervision.wms.app.job_detail;
 
 import com.supervision.wms.app.job.JobRepository;
+import com.supervision.wms.app.job.JobService;
 import com.supervision.wms.app.job.model.Job;
 import com.supervision.wms.app.job_detail.model.JobDetail;
 import java.util.List;
@@ -25,8 +26,10 @@ public class JobDetailService {
     @Autowired
     private JobDetailRepository jobDetailRepository;
 
-//    @Autowired
-//    private JobRepository jobRepository;
+    @Autowired
+    private JobRepository jobRepository;
+    @Autowired
+    private JobService jobService;
 
     public List<JobDetail> getAllJobDetails() {
         return jobDetailRepository.findAll();
@@ -37,7 +40,19 @@ public class JobDetailService {
     }
 
     public JobDetail saveJobDetail(JobDetail jobDetail) {
-        return jobDetailRepository.save(jobDetail);
+        JobDetail jobdetail = jobDetailRepository.save(jobDetail);
+        Job job = jobRepository.findOne(jobDetail.getJob());
+        List<JobDetail> jobDetailList = jobDetailRepository.getAllJobsByJobNoAndStatus(jobDetail.getJob());
+        System.out.println(jobDetailList.size());
+        if (jobDetailList.isEmpty()) {
+            System.out.println("++++++++++++++++++++++++++");
+            System.out.println("EMTY");
+            System.out.println("++++++++++++++++++++++++++");
+            job.setStatus("FINISH");
+            job.setUser(1);
+            jobService.saveJobs(job);
+        }
+        return jobdetail;
     }
 
     public List<JobDetail> getAllJobsDetailByEmployee(int user) {
@@ -50,6 +65,10 @@ public class JobDetailService {
 
     public List<JobDetail> getAllJobsDetailByEmployeeAndFinish(int user) {
         return jobDetailRepository.getAllJobsDetailByEmployeeAndFinish(user);
+    }
+
+    public void deleteJobDetail(Integer indexNo) {
+        jobDetailRepository.delete(indexNo);
     }
 
 }

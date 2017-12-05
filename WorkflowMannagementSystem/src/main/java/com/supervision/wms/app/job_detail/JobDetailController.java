@@ -41,6 +41,10 @@ public class JobDetailController {
     public JobDetail saveJobDetail(@RequestBody JobDetail jobDetail) {
         return jobDetailService.saveJobDetail(jobDetail);
     }
+    @RequestMapping(value = "/delete-job-detail/{indexNo}", method = RequestMethod.GET)
+    public void deleteJobDetail(@PathVariable Integer indexNo) {
+        jobDetailService.deleteJobDetail(indexNo);
+    }
 
     @RequestMapping(value = "/get-all-job-detail-by-employee-and-new/{user}", method = RequestMethod.GET)
     public List<JobDetail> getAllJobsDetailByEmployeeAndNew(@PathVariable int user) {

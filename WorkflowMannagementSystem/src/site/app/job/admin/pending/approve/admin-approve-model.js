@@ -9,15 +9,16 @@
             adminJobDetailData: {},
             adminJobItemData: {},
             selectedJob: {},
-            selectedJobIndex : null,
+            selectedJobIndex: null,
             newJobList: [],
             categoryList: [],
             employeeList: [],
             jobDetailList: [],
             jobItemList: [],
             itemList: [],
-            totalItemPrice:null,
- 
+            transactionList: [],
+            totalItemPrice: null,
+
             constructor: function () {
                 var that = this;
                 this.adminJobDetailData = AdminHomeModelFactory.newJobDetailData();
@@ -40,16 +41,26 @@
                             that.itemList = data;
                         });
             },
+            jobTransactions : function (indexNo){
+                var that = this;
+                AdminHomeJobService.findAllTransaction(indexNo)
+                        .success(function (data) {
+                           that.transactionList= data;
+                        })
+                        .error(function () {
+                            
+                        });
+            },
             getSelectedJobDetailItem: function (indexNo) {
                 var that = this;
                 AdminHomeJobService.getSelectedJobDetailItem(indexNo)
                         .success(function (data) {
                             that.jobItemList = data;
-                            that.totalItemPrice=that.setTotalItemPrice();
+                            that.totalItemPrice = that.setTotalItemPrice();
                         });
             },
             setTotalItemPrice: function () {
-                var total =0;
+                var total = 0;
                 angular.forEach(this.jobItemList, function (value) {
                     total += value.totalPrice;
                     return;
@@ -67,8 +78,9 @@
                 console.log(that.adminJobItemData);
                 AdminHomeJobService.saveJobItems(JSON.stringify(that.adminJobItemData))
                         .success(function (data) {
+                            console.log(data);
                             that.jobItemList.push(data);
-                            that.totalItemPrice += data.unitPrice;
+                            that.totalItemPrice += data.totalPrice;
                             defer.resolve(data);
                         })
                         .error(function () {
@@ -82,7 +94,7 @@
                 that.selectedJob.status = 'ASSIGN';
                 AdminHomeJobService.saveJobs(JSON.stringify(that.selectedJob))
                         .success(function (data) {
-                            that.newJobList.splice(that.selectedJobIndex , 1);
+                            that.newJobList.splice(that.selectedJobIndex, 1);
                             defer.resolve(data);
                         })
                         .error(function () {
@@ -96,6 +108,17 @@
                         .success(function (data) {
                             that.jobDetailList = data;
                         });
+            },
+            deleteJobDetail: function (indexNo) {
+                var defer = $q.defer();
+                AdminHomeJobService.deleteJobDetail(indexNo)
+                        .success(function (data) {
+                            defer.resolve(data);
+                        })
+                        .error(function () {
+                            defer.reject();
+                        });
+                return defer.promise;
             },
             employeeLable: function (indexNo) {
                 var employee;

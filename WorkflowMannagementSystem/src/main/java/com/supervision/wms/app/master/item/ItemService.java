@@ -19,7 +19,7 @@ public class ItemService {
 
     @Autowired
     private ItemRepository itemRepository;
-    
+
     public List<Item> getAllItem() {
         return itemRepository.findAll();
     }
@@ -27,5 +27,13 @@ public class ItemService {
     public Item saveItem(Item item) {
         return itemRepository.save(item);
     }
-    
+
+    public void deleteItem(Integer indexNo) {
+        try {
+            itemRepository.delete(indexNo);
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot delete this Item because there are details in other transaction");
+        }
+    }
+
 }

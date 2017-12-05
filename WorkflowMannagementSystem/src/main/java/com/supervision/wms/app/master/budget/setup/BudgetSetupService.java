@@ -20,7 +20,7 @@ public class BudgetSetupService {
 
     @Autowired
     private BudgetSetupRepository budgetSetupRepository;
-    
+
     public BudgetSetup saveBudgetSetup(BudgetSetup budgetSetup) {
         return budgetSetupRepository.save(budgetSetup);
     }
@@ -28,5 +28,13 @@ public class BudgetSetupService {
     public List<BudgetSetup> getAllBudgetSetup() {
         return budgetSetupRepository.findAll();
     }
-    
+
+    public void deleteBudgetSetup(Integer indexNo) {
+        try {
+            budgetSetupRepository.delete(indexNo);
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot delete this budgetCode setup because there are details in other transaction");
+        }
+    }
+
 }

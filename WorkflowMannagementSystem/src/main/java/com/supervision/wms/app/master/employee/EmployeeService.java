@@ -19,7 +19,7 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
-    
+
     public List<Employee> getAllEmployee() {
         return employeeRepository.findAll();
     }
@@ -27,5 +27,13 @@ public class EmployeeService {
     public Employee saveEmployee(Employee employee) {
         return employeeRepository.save(employee);
     }
-    
+
+    public void deleteEmployee(Integer indexNo) {
+        try {
+            employeeRepository.delete(indexNo);
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot delete this Employee because there are details in other transaction");
+        }
+    }
+
 }

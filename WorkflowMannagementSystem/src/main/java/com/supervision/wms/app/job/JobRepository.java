@@ -99,4 +99,6 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
             + "and job.`status`='COMPLETED' ", nativeQuery = true)
     public List<Job> getAllJobsByFinish(@Param("user") Integer user);
 
+    public List<Job> getAllJobsByStatus(String finish);
+
 }

@@ -63,8 +63,9 @@
                         <td>{{budgetCode.indexNo}}</td>
                         <td>{{budgetCode.code}}</td>
                         <td>{{budgetCode.description}}</td>
-                        <td><button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right" ng-click="http.deleteEmployee(budgetCode.indexNo)"><span class="glyphicon glyphicon-trash"></span></button>
-                            <button class="btn btn-xs btn-warning pull-right" ng-click="ui.edit(budgetCode)"><span class="glyphicon glyphicon-edit"></span></button>
+                        <td>
+                            <button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right" ng-click="ui.delete(budgetCode.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button class="btn btn-xs btn-warning pull-right" ng-click="ui.edit(budgetCode,$index)"><span class="glyphicon glyphicon-edit"></span></button>
                         </td>
                     </tr>
                 </tbody>

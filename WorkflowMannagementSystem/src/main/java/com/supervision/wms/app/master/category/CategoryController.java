@@ -9,6 +9,7 @@ import com.supervision.wms.app.master.category.model.Category;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,5 +34,9 @@ public class CategoryController {
     @RequestMapping(value = "/save-category" , method = RequestMethod.POST)
     public Category saveCategory(@RequestBody Category category){
         return categoryService.saveCategory(category);
+    }
+    @RequestMapping(value = "/delete-category/{indexNo}" , method = RequestMethod.DELETE)
+    public void deleteCategory(@PathVariable Integer indexNo){
+         categoryService.deleteCategory(indexNo);
     }
 }

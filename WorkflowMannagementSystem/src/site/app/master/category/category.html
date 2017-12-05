@@ -20,19 +20,19 @@
                             <input type="text" ng-model="model.category.description" class="form-control">
                         </td>
                     </tr>
-                    
+
                 </tbody>
             </table>
         </div>
     </div>
     <div class="col-sm-8 bg-white">
-        
-         <div style="margin-top: 15px">
+
+        <div style="margin-top: 15px">
             <div class="col-sm-3">
                 <input class="form-control" ng-model="model.search.name" placeholder="Search by name"><br>
             </div>
         </div>
-        
+
         <table class="table" style="margin-bottom: 0px;">
             <col style="width: 15%">
             <col style="width: 15%">
@@ -59,12 +59,13 @@
                 <col style="width: 15%">
                 <col style="width: 20%">
                 <tbody>
-                    <tr ng-repeat="category in model.categoryList | filter:{name:model.search.name} | orderBy:'indexNo' ">
+                    <tr ng-repeat="category in model.categoryList| filter:{name:model.search.name} | orderBy:'indexNo' ">
                         <td>{{category.indexNo}}</td>
                         <td>{{category.name}}</td>
                         <td>{{category.description}}</td>
-                        <td><button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right" ng-click="http.deleteEmployee(category.indexNo)"><span class="glyphicon glyphicon-trash"></span></button>
-                            <button class="btn btn-xs btn-warning pull-right" ng-click="ui.edit(category)"><span class="glyphicon glyphicon-edit"></span></button>
+                        <td>
+                            <button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right" ng-click="ui.delete(category.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button class="btn btn-xs btn-warning pull-right" ng-click="ui.edit(category, $index)"><span class="glyphicon glyphicon-edit"></span></button>
                         </td>
                     </tr>
                 </tbody>
@@ -72,8 +73,8 @@
         </div>
         <div class="row" style="height: 47px; border-top: 1px solid #cccccc">
             <div class="col-sm-12">
-                <button type="button" class="btn btn-success btn-sm pull-right" style="margin-top: 8px;border-radius: 0px" ng-click="ui.save()">
-                    <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Save
+                <button type="button" class="btn btn-success btn-sm pull-right" ng-click="ui.save();" style="margin-top: 8px;border-radius: 0px">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save
                 </button>
                 <button type="button" class="btn btn-primary btn-sm pull-right" style="margin-right: 10px;margin-top: 8px;border-radius: 0px" ng-click="ui.reset()">
                     <span class="glyphicon glyphicon-refresh" aria-hidden="true" ></span> Clear

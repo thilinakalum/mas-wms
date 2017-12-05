@@ -24,8 +24,20 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User saveDepartment(User user) {
+    public User saveUser(User user) {
         return userRepository.save(user);
+    }
+
+    public void deleteUser(Integer indexNo) {
+        try {
+            userRepository.delete(indexNo);
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot delete this User because there are details in other transaction");
+        }
+    }
+
+    public User findByName(String userName) {
+        return userRepository.findByUserName(userName);
     }
 
 }

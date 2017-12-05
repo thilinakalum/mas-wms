@@ -63,8 +63,9 @@
                         <td>{{department.indexNo}}</td>
                         <td>{{department.name}}</td>
                         <td>{{department.description}}</td>
-                        <td><button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right" ng-click="http.deleteEmployee(department.indexNo)"><span class="glyphicon glyphicon-trash"></span></button>
-                            <button class="btn btn-xs btn-warning pull-right" ng-click="ui.edit(department)"><span class="glyphicon glyphicon-edit"></span></button>
+                        <td>
+                            <button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right" ng-click="ui.delete(department.indexNo , $index)"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button class="btn btn-xs btn-warning pull-right" ng-click="ui.edit(department, $index)"><span class="glyphicon glyphicon-edit"></span></button>
                         </td>
                     </tr>
                 </tbody>

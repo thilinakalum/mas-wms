@@ -9,6 +9,7 @@
             depatmentJobData: {},
             pendingJobList: [],
             categoryList: [],
+            transactionList: [],
 
             constructor: function () {
                 var that = this;
@@ -21,6 +22,16 @@
                 DepartmentHomeJobService.getAllCategory()
                         .success(function (data) {
                             that.categoryList = data;
+                        });
+            },
+            jobTransactions : function (indexNo){
+                var that = this;
+                DepartmentHomeJobService.findAllTransaction(indexNo)
+                        .success(function (data) {
+                           that.transactionList= data;
+                        })
+                        .error(function () {
+                            
                         });
             },
             saveNewJob: function () {

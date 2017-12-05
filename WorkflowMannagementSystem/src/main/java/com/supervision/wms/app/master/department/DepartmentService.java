@@ -19,7 +19,7 @@ public class DepartmentService {
 
     @Autowired
     private DepartmentRepository departmentRepository;
-    
+
     public List<Department> getAllDepartment() {
         return departmentRepository.findAll();
     }
@@ -27,5 +27,13 @@ public class DepartmentService {
     public Department saveDepartment(Department department) {
         return departmentRepository.save(department);
     }
-    
+
+    public void deleteDepartment(Integer indexNo) {
+        try {
+            departmentRepository.delete(indexNo);
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot delete this Department because there are details in other transaction");
+        }
+    }
+
 }

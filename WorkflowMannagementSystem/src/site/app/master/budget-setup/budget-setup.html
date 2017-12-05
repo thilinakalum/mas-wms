@@ -9,7 +9,10 @@
                             <label class="control-label" style="margin-top: 9px">Budget Code :</label>
                         </td>
                         <td class="col-sm-8"> 
-                            <input type="text" ng-model="model.budgetSetup.budgetCode" class="form-control" uib-typeahead="budgetCode.indexNo as (budgetCode.indexNo + ' - ' + budgetCode.code) for budgetCode in model.budgetCodeList |filter:$viewValue|limitTo:10" typeahead-input-formatter="ui.budgetCodeLabel(model.budgetSetup.budgetCode);">
+                            <input type="text" ng-model="model.budgetSetup.budgetCode" class="form-control" 
+                                   uib-typeahead="budgetCode.indexNo as (budgetCode.indexNo + ' - ' + budgetCode.code) for budgetCode in model.budgetCodeList |filter:$viewValue|limitTo:10" 
+                                   typeahead-input-formatter="ui.budgetCodeLabel(model.budgetSetup.budgetCode);"
+                                   typeahead-editable='false'>
                         </td>
                     </tr>
                     <tr>
@@ -25,7 +28,7 @@
                             <label class="control-label" style="margin-top: 9px">Price :</label>
                         </td>
                         <td class="col-sm-8"> 
-                            <input type="text" ng-model="model.budgetSetup.price" class="form-control">
+                            <input type="number" ng-model="model.budgetSetup.price" class="form-control">
                         </td>
                     </tr>
                     
@@ -73,8 +76,9 @@
                         <td>{{ui.budgetCodeLabel(budgetSetup.budgetCode)}}</td>
                         <td>{{budgetSetup.year}}</td>
                         <td>{{budgetSetup.price}}</td>
-                        <td><button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right" ng-click="http.deleteEmployee(budgetSetup.indexNo)"><span class="glyphicon glyphicon-trash"></span></button>
-                            <button class="btn btn-xs btn-warning pull-right" ng-click="ui.edit(budgetSetup)"><span class="glyphicon glyphicon-edit"></span></button>
+                        <td>
+                            <button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right" ng-click="ui.delete(budgetSetup.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button class="btn btn-xs btn-warning pull-right" ng-click="ui.edit(budgetSetup , $index)"><span class="glyphicon glyphicon-edit"></span></button>
                         </td>
                     </tr>
                 </tbody>

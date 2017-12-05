@@ -22,7 +22,6 @@
             return $http.post(systemConfig.apiUrl + "/api/wms/job-detail/save-job-detail" , data);
         };
         this.saveJobItems = function (data) {
-            console.log(data);
             return $http.post(systemConfig.apiUrl + "/api/wms/job-items/save-job-items" , data);
         };
         this.getAllItems = function () {
@@ -30,6 +29,12 @@
         };
         this.getSelectedJobDetailItem = function (indexNo) {
             return $http.get(systemConfig.apiUrl + "/api/wms/job-items/get-all-item-by-job-detail/" + indexNo);
+        };
+        this.deleteJobDetail = function (indexNo) {
+            return $http.get(systemConfig.apiUrl + "/api/wms/job-detail/delete-job-detail/" + indexNo);
+        };
+        this.findAllTransaction = function (indexNo) {
+            return $http.get(systemConfig.apiUrl + "/api/wms/job-transaction/get-all-job-transaction/" +indexNo);
         };
     };
     angular.module("AppModule")

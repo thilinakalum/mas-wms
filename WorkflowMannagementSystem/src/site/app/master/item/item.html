@@ -17,7 +17,7 @@
                             <label for="empname" class="control-label" style="margin-top: 9px">Unit Price :</label>
                         </td>
                         <td class="col-sm-8"> 
-                            <input type="text" ng-model="model.item.unitPrice" class="form-control" >
+                            <input type="number" ng-model="model.item.unitPrice" class="form-control" >
                         </td>
                     </tr>
                     <tr>
@@ -71,8 +71,8 @@
                         <td>{{item.name}}</td>
                         <td>{{item.unitPrice}}</td>
                         <td>{{item.description}}</td>
-                        <td><button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right" ng-click="http.deleteEmployee(item.indexNo)"><span class="glyphicon glyphicon-trash"></span></button>
-                            <button class="btn btn-xs btn-warning pull-right" ng-click="ui.edit(item)"><span class="glyphicon glyphicon-edit"></span></button>
+                        <td><button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right" ng-click="ui.delete(item.indexNo,$index)"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button class="btn btn-xs btn-warning pull-right" ng-click="ui.edit(item,$index)"><span class="glyphicon glyphicon-edit"></span></button>
                         </td>
                     </tr>
                 </tbody>

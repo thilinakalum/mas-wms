@@ -9,6 +9,9 @@
         this.getAllCategory = function () {
             return $http.get(systemConfig.apiUrl + "/api/wms/master/category/find-all-category" );
         };
+        this.findAllTransaction = function (indexNo) {
+            return $http.get(systemConfig.apiUrl + "/api/wms/job-transaction/get-all-job-transaction/" +indexNo);
+        };
     };
     angular.module("AppModule")
             .service("DepartmentHomeJobService", service);

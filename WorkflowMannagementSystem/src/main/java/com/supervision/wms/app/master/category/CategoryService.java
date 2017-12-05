@@ -27,5 +27,13 @@ public class CategoryService {
     public List<Category> getAllCategory() {
         return categoryRepository.findAll();
     }
+
+    public void deleteCategory(Integer indexNo) {
+        try {
+        categoryRepository.delete(indexNo);
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot delete this Category because there are details in other transaction");
+        }
+    }
     
 }

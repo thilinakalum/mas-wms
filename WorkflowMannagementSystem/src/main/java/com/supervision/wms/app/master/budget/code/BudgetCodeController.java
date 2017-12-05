@@ -9,6 +9,7 @@ import com.supervision.wms.app.master.budget.code.model.BudgetCode;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,6 +35,10 @@ public class BudgetCodeController {
     @RequestMapping(value = "/save-budget-code" , method = RequestMethod.POST)
     public BudgetCode saveBudgetCode(@RequestBody BudgetCode budgetCode){
         return budgetCodeService.saveBudgetCode(budgetCode);
+    }
+    @RequestMapping(value = "/delete-budget-code/{indexNo}" , method = RequestMethod.DELETE)
+    public void deleteBudgetCode(@PathVariable Integer indexNo){
+         budgetCodeService.deleteBudgetCode(indexNo);
     }
     
 }

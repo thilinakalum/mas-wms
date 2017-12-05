@@ -15,17 +15,23 @@ import org.springframework.data.repository.query.Param;
  *
  * @author Thilina Kalum
  */
-public interface JobDetailRepository extends JpaRepository<JobDetail, Integer>{
+public interface JobDetailRepository extends JpaRepository<JobDetail, Integer> {
 
     public List<JobDetail> findByJob(int indexNo);
 
-    @Query(value = "select job_detail.* from job_detail where job_detail.employee =:user and job_detail.`status` = 'NEW'" , nativeQuery = true)
+    @Query(value = "select job_detail.* from job_detail where job_detail.employee =:user and job_detail.`status` = 'NEW'", nativeQuery = true)
     public List<JobDetail> getAllJobsDetailByEmployeeAndNew(@Param("user") int user);
-    
-    @Query(value = "select job_detail.* from job_detail where job_detail.employee =:user and job_detail.`status` = 'ONGOING'" , nativeQuery = true)
+
+    @Query(value = "select job_detail.* from job_detail where job_detail.employee =:user and job_detail.`status` = 'ONGOING'", nativeQuery = true)
     public List<JobDetail> getAllJobsDetailByEmployeeAndRunning(@Param("user") int user);
-    
-    @Query(value = "select job_detail.* from job_detail where job_detail.employee =:user and job_detail.`status` = 'FINISH'" , nativeQuery = true)
+
+    @Query(value = "select job_detail.* from job_detail where job_detail.employee =:user and job_detail.`status` = 'FINISH'", nativeQuery = true)
     public List<JobDetail> getAllJobsDetailByEmployeeAndFinish(@Param("user") int user);
-    
+
+    @Query(value = "select * \n"
+            + "from job_detail \n"
+            + "where job_detail.`job` = :jobNo \n"
+            + "and job_detail.`status` ='NEW' \n"
+            + "or job_detail.`status` ='ONGOING' ", nativeQuery = true)
+    public List<JobDetail> getAllJobsByJobNoAndStatus(@Param("jobNo") int jobNo);
 }

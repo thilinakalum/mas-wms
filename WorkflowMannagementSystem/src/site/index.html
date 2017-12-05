@@ -1,0 +1,370 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <title>WMS</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <!--<link rel="shortcut icon" href="images/titel_image.png">-->
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <!--css-->
+        <!-- inject:css -->
+        <!-- endinject -->
+
+    </head>
+
+    <body onload="myFunction()" ng-app="AppModule" ng-controller="IndexController">
+        <div id="loader" class="preloader">
+            <div class="circ1"></div>
+            <div class="circ2"></div>
+            <div class="circ3"></div>
+            <div class="circ4"></div>
+        </div>
+
+        <div class="app layout-fixed-header" id="myDiv">
+            <div class="sidebar-panel offscreen-left">
+                <div class="brand">
+                    <div class="brand-logo">
+                        <label style="font-size: 18px; color: white">MENU</label>
+                    </div>
+
+                    <a href="javascript:;" class="toggle-sidebar hidden-xs hamburger-icon v3" data-toggle="layout-small-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </a>
+                </div>
+
+                <!-- main navigation -->
+                <nav role="navigation">
+                    <ul class="nav">
+                        <li>
+                            <a href="javascript:;">
+                                <span>Admin<i></i></span>
+                                <span> <label class="label label-lg label-danger" style=" border-radius: 100px;"></label></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Pending<i></i></span>
+                                        <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['NEW']+model.map['UNAPPROVE']+model.map['APPROVE']+model.map['REJECT']===0?'':model.map['NEW']+model.map['UNAPPROVE']+model.map['APPROVE']+model.map['REJECT']}}</label></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#/admin-new">
+                                                <span>New</span>
+                                                <span><label class="label label-lg label-primary" style=" border-radius: 100px;">{{model.map['NEW']===0?'':model.map['NEW']}}</label></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#/admin-unapprove">
+                                                <span>Unapprove</span>
+                                                <span> <label class="label label-lg label-warning" style=" border-radius: 100px;">{{model.map['UNAPPROVE']===0?'':model.map['UNAPPROVE']}}</label></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#/admin-approve">
+                                                <span>Approve</span>
+                                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['APPROVE']===0?'':model.map['APPROVE']}}</label></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#/admin-reject">
+                                                <span>Reject</span>
+                                                <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['REJECT']===0?'':model.map['REJECT']}}</label></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>On Going<i></i></span>
+                                        <span> <label class="label label-lg label-warning" style=" border-radius: 100px;">{{model.map['ASSIGN']+model.map['FINISH']===0?'':model.map['ASSIGN']+model.map['FINISH']}}</label></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#/admin-assign">
+                                                <span>Assign</span>
+                                                <span> <label class="label label-lg label-primary" style=" border-radius: 100px;">{{model.map['ASSIGN']===0?'':model.map['ASSIGN']}}</label></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#/admin-finish">
+                                                <span>Finish</span>
+                                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['FINISH']===0?'':model.map['FINISH']}}</label></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Completed<i></i></span>
+                                        <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']+model.map['COMPLETED']===0?'':model.map['UNCOMFIRM']+model.map['COMPLETED']}}</label></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#/admin-department-send">
+                                                <span>Department Send</span>
+                                                <span> <label class="label label-lg label-primary" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']===0?'':model.map['UNCOMFIRM']}}</label></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#/department-confirm">
+                                                <span>Completed</span>
+                                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['COMPLETED']===0?'':model.map['COMPLETED']}}</label></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        </li>
+                        <li>
+                            <a href="javascript:;">
+                                <span>Department<i></i></span>
+                                <span> <label class="label label-lg label-danger" style=" border-radius: 100px;"></label></span>
+                            </a>
+
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Pending<i></i></span>
+                                        <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['NEW']+model.map['UNAPPROVE']+model.map['APPROVE']+model.map['REJECT']===0?'':model.map['NEW']+model.map['UNAPPROVE']+model.map['APPROVE']+model.map['REJECT']}}</label></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#/department-new">
+                                                <span>New</span>
+                                                <span> <label class="label label-lg label-primary" style=" border-radius: 100px;">{{model.map['NEW']===0?'':model.map['NEW']}}</label></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#/department-unapprove">
+                                                <span>Unapprove</span>
+                                                <span> <label class="label label-lg label-warning" style=" border-radius: 100px;">{{model.map['UNAPPROVE']===0?'':model.map['UNAPPROVE']}}</label></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#/department-approve">
+                                                <span>Approved</span>
+                                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['APPROVE']===0?'':model.map['APPROVE']}}</label></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#/department-reject">
+                                                <span>Rejected</span>
+                                                <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['REJECT']===0?'':model.map['REJECT']}}</label></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>On Going<i></i></span>
+                                        <span> <label class="label label-lg label-warning" style=" border-radius: 100px;"></label></span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Completed<i></i></span>
+                                        <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']+model.map['COMPLETED']===0?'':model.map['UNCOMFIRM']+model.map['COMPLETED']}}</label></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#/department-unconfirm">
+                                                <span>Unconfirmed</span>
+                                                <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']===0?'':model.map['UNCOMFIRM']}}</label></span>
+                                            </a>
+                                            <a href="#/department-confirm">
+                                                <span>Completed</span>
+                                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['COMPLETED']===0?'':model.map['COMPLETED']}}</label></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li> 
+                        <li> 
+                            <a href="javascript:;">
+                                <span>Worker<i></i></span>
+                                <span> <label class="label label-lg label-danger" style=" border-radius: 100px;"></label></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Pending<i></i></span>
+                                        <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">3</label></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#/employee-new">
+                                                <span>New</span>
+                                                <span> <label class="label label-lg label-info" style=" border-radius: 100px;">03</label></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>On Going<i></i></span>
+                                        <span> <label class="label label-lg label-warning" style=" border-radius: 100px;">3</label></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#/employee-running">
+                                                <span>Runing</span>
+                                                <span> <label class="label label-lg label-info" style=" border-radius: 100px;">03</label></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Completed<i></i></span>
+                                        <span> <label class="label label-lg label-success" style=" border-radius: 100px;">3</label></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#/employee-finish">
+                                                <span>Finish</span>
+                                                <span> <label class="label label-lg label-info" style=" border-radius: 100px;">03</label></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:;">
+                                <span>Master<i></i></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="#/category">
+                                        <span>Category</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/employee">
+                                        <span>Employee</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/user">
+                                        <span>User</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/department">
+                                        <span>Department</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/item">
+                                        <span>Item</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/budget-code">
+                                        <span>Budget Code</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/budget-setup">
+                                        <span>Budget Setup</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /main navigation -->
+            </div>
+            <!-- /sidebar panel -->
+
+            <!-- content panel -->
+            <div class="main-panel">
+
+                <!-- top header -->
+                <header class="header navbar " >
+
+                    <div class="brand visible-xs">
+                        <!-- toggle offscreen menu -->
+                        <div class="toggle-offscreen">
+                            <a href="#" class="hamburger-icon visible-xs" data-toggle="offscreen" data-move="ltr">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </a>
+                        </div>
+                        <!-- /toggle offscreen menu -->
+
+                        <!-- logo -->
+                        <div class="brand-logo">
+                            <img src="./images/logo-dark.png" height="15" alt="">
+                        </div>
+                        <!-- /logo -->
+
+                        <!-- toggle chat sidebar small screen-->
+                        <div class="toggle-chat">
+                            <a href="javascript:;" class="hamburger-icon v2 visible-xs" data-toggle="layout-chat-open">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <ul class="nav navbar-nav navbar-right hidden-xs">
+
+                        <li>
+                            <a href="javascript:;" data-toggle="dropdown">{{}} &nbsp;<label class="glyphicon glyphicon-user"></label>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a ng-click="ui.logout()">Logout</a>
+                                </li>
+                            </ul>
+
+                        </li>
+
+                    </ul>
+                </header>
+                <div class="main-content no-padding bg-white no-margin" ng-view>
+                </div>
+
+            </div>
+        </div>
+        <!--js-->
+        <!-- inject:js -->
+        <!-- endinject -->
+
+        <script>
+            var myVar;
+
+            function myFunction() {
+                myVar = setTimeout(showPage, 1000);
+            }
+
+            function showPage() {
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("myDiv").style.display = "block";
+            }
+        </script>
+    </body>
+</html>

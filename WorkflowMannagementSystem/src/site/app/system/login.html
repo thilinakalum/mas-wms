@@ -1,0 +1,43 @@
+<div class="login">
+    <div class="login-window" style="background-color: #007399">
+        <div class="login-form">
+            <div class="login-header">
+                <div style="padding-top: 15px;">
+                </div>
+
+                <label style="padding-bottom: 0!important; padding-top: 20px;">Login to your account</label>
+            </div>
+
+            <div class="alert alert-danger" ng-show="error" style="margin-bottom: 0px;">
+                {{error}}
+            </div>
+
+            <div class="text-center" ng-show="loading === 'loading'">
+                <img src="images/loading.gif" width="70px" height="70px">
+            </div><br>
+
+
+            <form role="form" ng-submit="login()">
+                <div class="login-input">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input type="text" class="form-control" ng-model="username" placeholder="user name" autofocus required>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input  type="password" class="form-control" ng-model="password" placeholder="password" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="login-footer border-dark-top background-dark">
+                    <button type="submit" class="btn btn-lg btn-block" style="background-color: #007399; color: white">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

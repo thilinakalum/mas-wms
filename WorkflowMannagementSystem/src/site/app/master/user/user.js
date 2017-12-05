@@ -3,6 +3,7 @@
             .controller("UserController", function ($scope, Factory, Notification) {
                 $scope.model = {};
                 $scope.ui = {};
+                $scope.model.user= {};
                 $scope.model.userList = [];
                 $scope.model.departmentList = [];
                 $scope.model.employeeList = [];
@@ -11,25 +12,44 @@
                 var findAllEmployeeUrl = "/api/wms/master/employee/find-all-employee";
                 var findAllUrl = "/api/wms/master/user/find-all-user";
                 var saveUrl = "/api/wms/master/user/save-user";
+                var deleteUrl = "/api/wms/master/user/delete-user/";
 
                 $scope.ui.reset = function () {
                     $scope.model.user = {};
                 };
-
-                $scope.ui.save = function () {
-                    var detail = $scope.model.user;
-                    var detailJSON = JSON.stringify(detail);
-
-                    Factory.save(saveUrl, detailJSON,
+                $scope.ui.edit = function (user, index) {
+                    $scope.model.userList.splice(index, 1);
+                    $scope.model.user = user;
+                };
+                
+                $scope.ui.delete = function (indexNo, index) {
+                    Factory.delete(deleteUrl, indexNo,
                             function (data) {
-                                Notification.success(data.indexNo + " - " + "User Save Successfully");
-                                $scope.model.userList.push(data);
-                                $scope.ui.reset();
+                                Notification.success("User Delete Successfully");
+                                $scope.model.userList.splice(index, 1);
                             },
                             function (data) {
                                 Notification.error(data.message);
                             }
                     );
+                };
+
+                $scope.ui.save = function () {
+                    if ($scope.validate()) {
+                        var detail = $scope.model.user;
+                        var detailJSON = JSON.stringify(detail);
+
+                        Factory.save(saveUrl, detailJSON,
+                                function (data) {
+                                    Notification.success(data.indexNo + " - " + "User Save Successfully");
+                                    $scope.model.userList.push(data);
+                                    $scope.ui.reset();
+                                },
+                                function (data) {
+                                    Notification.error(data.message);
+                                }
+                        );
+                    }
                 };
                 $scope.ui.employeeLable = function (indexNo) {
                     var employee;
@@ -51,6 +71,34 @@
                     });
                     return department;
                 };
+
+                $scope.validate = function () {
+                    if (!$scope.model.user.userName) {
+                        Notification.error("Please Input user Name !!!");
+                        return false;
+                    } else if (!$scope.model.user.password) {
+                        Notification.error("Please Input User Password !!!");
+                        return false;
+                    } else if (!$scope.model.user.reEnterPassword) {
+                        Notification.error("Please Input Re-Enter Password !!!");
+                        return false;
+                    } else if (!$scope.model.user.type) {
+                        Notification.error("Please Input User Type!!!");
+                        return false;
+                    } else if (!$scope.model.user.department) {
+                        Notification.error("Please Input User Department !!!");
+                        return false;
+                    } else if (!$scope.model.user.employee) {
+                        Notification.error("Please Input User Descripton !!!");
+                        return false;
+                    } else if ($scope.model.user.password !== $scope.model.user.reEnterPassword) {
+                        Notification.error("Password Not Match !!!");
+                        return false;
+                    } else if ($scope.model.user.userName && $scope.model.user.password && $scope.model.user.type && $scope.model.user.department && $scope.model.user.employee) {
+                        return true;
+                    }
+                };
+
 
                 $scope.ui.init = function () {
                     Factory.findAll(findAllUrl, function (data) {

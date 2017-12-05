@@ -71,6 +71,10 @@ public class JobController {
     public List<Job> getAllNewJobs(){
         return jobService.getAllNewJobs();
     }
+    @RequestMapping(value = "/get-all-jobs-by-finish" , method = RequestMethod.GET)
+    public List<Job> getAllJobsByStatsFinish(){
+        return jobService.getAllJobsByStatsFinish();
+    }
     @RequestMapping(value = "/save-jobs" , method = RequestMethod.POST)
     public Job saveJobs(@RequestBody Job job){
         job.setBranch(1);

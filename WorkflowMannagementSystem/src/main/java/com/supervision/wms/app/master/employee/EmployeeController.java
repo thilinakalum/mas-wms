@@ -9,6 +9,7 @@ import com.supervision.wms.app.master.employee.model.Employee;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,5 +35,9 @@ public class EmployeeController {
     public Employee saveEmployee(@RequestBody Employee employee){
         employee.setBranch(1);
         return employeeService.saveEmployee(employee);
+    }
+    @RequestMapping(value = "/delete-employee/{indexNo}" , method = RequestMethod.DELETE)
+    public void deleteEmployee(@PathVariable Integer indexNo){
+        employeeService.deleteEmployee(indexNo);
     }
 }

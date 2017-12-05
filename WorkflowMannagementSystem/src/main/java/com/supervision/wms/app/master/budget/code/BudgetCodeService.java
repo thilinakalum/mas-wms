@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 public class BudgetCodeService {
 
     @Autowired
-    private BudgetCodeRepository budgetCodeRepository; 
-    
+    private BudgetCodeRepository budgetCodeRepository;
+
     public BudgetCode saveBudgetCode(BudgetCode budgetCode) {
         return budgetCodeRepository.save(budgetCode);
     }
@@ -27,5 +27,13 @@ public class BudgetCodeService {
     public List<BudgetCode> getAllBudgetCode() {
         return budgetCodeRepository.findAll();
     }
-    
+
+    public void deleteBudgetCode(Integer indexNo) {
+        try {
+            budgetCodeRepository.delete(indexNo);
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot delete this budgetCode because there are details in other transaction");
+        }
+    }
+
 }

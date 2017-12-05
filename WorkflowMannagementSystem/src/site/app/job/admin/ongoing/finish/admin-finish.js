@@ -1,6 +1,6 @@
 (function () {
     angular.module("AppModule")
-            .controller("AdminFinishController", function ($scope, Notification, Factory) {
+            .controller("AdminFinishController", function ($scope, $rootScope, Notification, Factory) {
                 $scope.model = {};
                 $scope.ui = {};
                 $scope.model.job = {};
@@ -10,13 +10,15 @@
                 $scope.model.jobItemList = [];
                 $scope.model.ItemList = [];
                 $scope.listIndex = 0;
+                $scope.ui.mode = true;
 
-                var findAllUrl = "/api/wms/job/get-all-jobs-if-finish-one-of-job-detail";
+                var findAllUrl = "/api/wms/job/get-all-jobs-by-finish";
                 var findAllSelectedJobDetailItemUrl = "/api/wms/job-items/get-all-item-by-job-detail/";
                 var findAllJobDetailUrl = "/api/wms/job-detail/find-all-job-details-by-job/";
                 var findAllEmployee = "/api/wms/master/employee/find-all-employee";
                 var findAllItem = "/api/wms/master/item/find-all-item";
                 var saveUrl = "/api/wms/job/save-jobs";
+                var findAllTransactionUrl = "/api/wms/job-transaction/get-all-job-transaction/";
 
 //                $scope.ui.reset = function () {
 //                    $scope.model.job = {};
@@ -24,27 +26,40 @@
 //                };
 
                 $scope.ui.sendDepartment = function () {
-                    var detail = $scope.model.job;
-                    detail.status = "UNCOMFIRM";
-                    var detailJSON = JSON.stringify(detail);
-                    Factory.save(saveUrl, detailJSON,
-                            function (data) {
-                                Notification.success(data.indexNo + " - " + "Job Send To Depatment Success");
-                                $scope.model.newJobList.splice($scope.listIndex , 1);
-                                $scope.ui.reset();
-                            },
-                            function (data) {
-                                Notification.error(data.message);
-                            }
-                    );
+                    if ($scope.ui.mode) {
+                        $scope.ui.mode = false;
+                        var detail = $scope.model.job;
+                        detail.status = "UNCOMFIRM";
+                        var detailJSON = JSON.stringify(detail);
+                        Factory.save(saveUrl, detailJSON,
+                                function (data) {
+                                    Notification.success(data.indexNo + " - " + "Job Send To Depatment Success");
+                                    $scope.model.newJobList.splice($scope.listIndex, 1);
+                                    $rootScope.model.map.UNCOMFIRM += 1;
+                                    $rootScope.model.map.FINISH -= 1;
+                                    $scope.ui.reset();
+                                    $scope.ui.mode = true;
+                                },
+                                function (data) {
+                                    Notification.error(data.message);
+                                    $scope.ui.mode = true;
+                                }
+                        );
+                    }
                 };
-                
+
                 $scope.ui.setDescription = function (job, index) {
                     $scope.listIndex = index;
                     $scope.ui.selectedJobIndex = job.indexNo;
                     $scope.model.job = job;
                     $scope.model.getAllJobDetail(job.indexNo);
                     $scope.description = job.clientDescription;
+                    $scope.ui.jobTransactions(job.indexNo);
+                };
+                $scope.ui.jobTransactions = function (indexNo) {
+                    Factory.findAll(findAllTransactionUrl+indexNo, function (data) {
+                        $scope.model.transactionList = data;
+                    });
                 };
                 $scope.ui.selectedJobDetails = function (jobDetail) {
                     $scope.ui.selectedDetailIndex = jobDetail.indexNo;
@@ -103,6 +118,9 @@
                     return item;
                 };
                 $scope.ui.init = function () {
+                    Factory.getCountList("/api/wms/count/get-all-count", function (data) {
+                        $rootScope.model.map = data;
+                    });
                     Factory.findAll(findAllUrl, function (data) {
                         $scope.model.newJobList = data;
                     });

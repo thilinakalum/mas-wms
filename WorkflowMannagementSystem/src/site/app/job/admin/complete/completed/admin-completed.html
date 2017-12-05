@@ -1,6 +1,5 @@
 <div class="bt border-primary">
-
-    <div class="col-lg-3" style="background-color: #ffffff">
+    <div class="col-md-3" style="background-color: #ffffff">
         <div class="row text-center" style="height: 40px; background-color: #2b8ec2; color: white;font-size: 20px;padding-top: 4px;">JOBS</div>
         <div style="margin-top: 15px;height: calc(100vh - 111px)">
             <div class="input-group input-group-md">
@@ -25,31 +24,31 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6 bg-default-light">
+    <div class="col-md-6 bg-default-light">
         <div class="row text-center" style="height: 40px; background-color: #2b5f92; color: white;font-size: 20px;padding-top: 4px;">ASSING JOBS</div>
 
-<!--        <div style="height: calc(100vh - 100px)">
+        <div style="height: calc(100vh - 100px)">
             <table class="table">
                 <tbody style="background-color: #ffffff">
                     <tr>
-                        <td class="col-sm-12">
+                        <td class="col-md-12">
                             <label class="control-label" > Description :</label>
-                            <textarea style="font-size: 20px;" readonly="true" rows="3" cols="52" ng-model="model.job.clientDescription"></textarea>
+                            <textarea class="form-control" style="font-size: 20px; height: 13vh" readonly="true" ng-model="model.job.clientDescription"></textarea>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <div class="col-sm-12" style="height: 120px;background-color: white">
-                <div class="col-lg-6" style="margin-top: 8px">
+            <div class="col-md-12" style="height: 120px;background-color: white">
+                <div class="col-md-6" style="margin-top: 8px">
                     <label class="control-label">Budget Code </label>
                     <input type="text" ng-model="model.job.budgetCode" readonly="true" class="form-control" uib-typeahead="budgetCode.indexNo as (budgetCode.indexNo + ' - ' + budgetCode.code) for budgetCode in model.budgetCodeList |filter:$viewValue|limitTo:10" typeahead-input-formatter="ui.budgetCodeLabel(model.job.budgetCode);">
                 </div>
-                <div class="col-lg-6" style="margin-top: 8px">
+                <div class="col-md-6" style="margin-top: 8px">
                     <label class="control-label" >Estimate Budget :</label>
                     <input type="text" class="form-control" readonly="true" ng-model="model.job.estimateBudget">
                 </div>
-                <div class="col-lg-6" style="margin-top: 12px"></div>
-                <div class="col-lg-6" style="margin-top: 12px">
+                <div class="col-md-6" style="margin-top: 12px"></div>
+                <div class="col-md-6" style="margin-top: 12px">
                     <button type="button" ng-click="ui.cansel()" class=" col-sm-4 btn btn-danger btn-sm " style="border-radius: 0px" ng-click="ui.clear()">
                         <span class="glyphicon glyphicon-refresh" aria-hidden="true" ></span> Cansel
                     </button>
@@ -61,15 +60,15 @@
                     </button>
                 </div>
             </div>
-            <div class="col-sm-12" ng-show="ui.canselReasonText" style="height: 185px;background-color: #cccccc">
+            <div class="col-md-12" ng-show="ui.canselReasonText" style="height: 185px;background-color: #cccccc">
                 <div style="margin-top: 8px">
                     <label class="control-label" > Reason :</label>
                     <textarea style="font-size: 20px;" rows="3" cols="52" ng-model="model.job.reason"></textarea>
                 </div>
-                <div class="col-lg-4" style="margin-top: 12px"></div>
-                <div class="col-lg-4" style="margin-top: 12px"></div>
-                <div class="col-lg-4" style="margin-top: 12px">
-                    <button type="button" ng-click="ui.cansel()" class=" col-sm-6 btn btn-danger btn-sm " style="border-radius: 0px" ng-click="ui.clear()">
+                <div class="col-md-4" style="margin-top: 12px"></div>
+                <div class="col-md-4" style="margin-top: 12px"></div>
+                <div class="col-md-4" style="margin-top: 12px">
+                    <button type="button" ng-click="ui.cansel()" class=" col-md-6 btn btn-danger btn-sm " style="border-radius: 0px" ng-click="ui.clear()">
                         <span class="glyphicon glyphicon-refresh" aria-hidden="true" ></span> Cansel
                     </button>
                     <button type="button" class="col-sm-6 btn btn-success btn-sm " style="border-radius: 0px" ng-click="ui.saveCanselReason()">
@@ -77,14 +76,14 @@
                     </button>
                 </div>
             </div>
-            <div class="col-sm-12" ng-show="ui.rejectReasonText" style="height: 185px;background-color: #cccccc">
+            <div class="col-md-12" ng-show="ui.rejectReasonText" style="height: 185px;background-color: #cccccc">
                 <div style="margin-top: 8px">
                     <label class="control-label" > Reason :</label>
                     <textarea style="font-size: 20px;" rows="3" cols="52" ng-model="model.job.reason"></textarea>
                 </div>
-                <div class="col-lg-4" style="margin-top: 12px"></div>
-                <div class="col-lg-4" style="margin-top: 12px"></div>
-                <div class="col-lg-4" style="margin-top: 12px">
+                <div class="col-md-4" style="margin-top: 12px"></div>
+                <div class="col-md-4" style="margin-top: 12px"></div>
+                <div class="col-md-4" style="margin-top: 12px">
                     <button type="button" ng-click="ui.cansel()" class=" col-sm-6 btn btn-danger btn-sm " style="border-radius: 0px" ng-click="ui.clear()">
                         <span class="glyphicon glyphicon-refresh" aria-hidden="true" ></span> Cansel
                     </button>
@@ -93,16 +92,16 @@
                     </button>
                 </div>
             </div>
-        </div>-->
+        </div>
     </div>  
 </div>
-<div class="col-lg-3">
+<div class="col-md-3">
     <div class="row text-center" style="height: 40px; background-color: #2b8ec2; color: white;font-size: 20px;padding-top: 4px;">JOBS HISTORY</div>
     <div style="margin-top: 15px;height: calc(100vh - 111px)">
         <table class="table table-condensed " >
             <tbody>
                 <tr>
-                    <td class="col-sm-3">
+                    <td class="col-md-3">
                         <label for="type" class="control-label" style="margin-top: 9px">Job No  :  001</label><br>
                         <label for="type" class="control-label" style="margin-top: 9px">Department  :  Accounting </label><br>
                         <label for="type" class="control-label" style="margin-top: 9px">Sender  :  Oshada</label><br>

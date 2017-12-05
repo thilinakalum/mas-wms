@@ -42,6 +42,7 @@
                 };
 
                 $scope.ui.setDescription = function (job, index) {
+                    $scope.ui.mode = 'select';
                     $scope.listIndex = index;
                     $scope.ui.selectedJobIndex = job.indexNo;
                     $scope.model.jobDetailData = job;
@@ -108,6 +109,7 @@
                     });
                 };
                 $scope.ui.init = function () {
+                    $scope.ui.mode = "unselect";
                     Factory.findAll(findAllUrl, function (data) {
                         $scope.model.newJobList = data;
                         console.log(data);

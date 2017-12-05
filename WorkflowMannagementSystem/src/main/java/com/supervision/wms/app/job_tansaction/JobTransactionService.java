@@ -5,7 +5,9 @@
  */
 package com.supervision.wms.app.job_tansaction;
 
+import com.supervision.wms.app.job.model.Job;
 import com.supervision.wms.app.job_tansaction.model.JobTransaction;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +23,9 @@ public class JobTransactionService {
     
     public JobTransaction saveTransAction(JobTransaction jobTransaction){
         return jobTransactionRepository.save(jobTransaction);
+    }
+
+    public List<JobTransaction> getAllJobTransactionByJobNo(Integer indexNo) {
+        return jobTransactionRepository.findByJob(indexNo);
     }
 }

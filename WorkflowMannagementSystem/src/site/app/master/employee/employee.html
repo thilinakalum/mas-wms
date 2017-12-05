@@ -87,8 +87,8 @@
                         <td>{{employee.name}}</td>
                         <td>{{employee.mobile}}</td>
                         <td>{{employee.address}}</td>
-                        <td><button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right" ng-click="http.deleteEmployee(employee.indexNo)"><span class="glyphicon glyphicon-trash"></span></button>
-                            <button class="btn btn-xs btn-warning pull-right" ng-click="ui.edit(employee)"><span class="glyphicon glyphicon-edit"></span></button>
+                        <td><button style="margin-left: 5px" class="btn btn-xs btn-danger pull-right" ng-click="ui.delete(employee.indexNo,$index)"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button class="btn btn-xs btn-warning pull-right" ng-click="ui.edit(employee, $index)"><span class="glyphicon glyphicon-edit"></span></button>
                         </td>
                     </tr>
                 </tbody>

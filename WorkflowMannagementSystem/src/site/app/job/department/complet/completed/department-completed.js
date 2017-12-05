@@ -1,6 +1,6 @@
 (function () {
     angular.module("AppModule")
-            .controller("DepatmentCompletedController", function ($scope, Notification, Factory) {
+            .controller("DepatmentCompletedController", function ($scope,$rootScope, Factory) {
                 $scope.model = {};
                 $scope.ui = {};
                 $scope.model.job = {};
@@ -24,6 +24,9 @@
                 };
 
                 $scope.ui.init = function () {
+                    Factory.getCountList("/api/wms/count/get-all-count", function (data) {
+                        $rootScope.model.map = data;
+                    });
                     Factory.findAll(findAllUrl, function (data) {
                         $scope.model.newJobList = data;
                     });

@@ -42,6 +42,7 @@
                 };
 
                 $scope.ui.setDescription = function (job, index) {
+                    $scope.ui.mode ='select';
                     $scope.listIndex = index;
                     $scope.ui.selectedJobIndex = job.indexNo;
                     $scope.model.jobDetailData = job;
@@ -63,7 +64,7 @@
                 
                 $scope.ui.saveJobItems = function () {
                     var detail = $scope.model.adminJobItemData;
-                    detail.jobDetail = $scope.model.jobDetailData.indexNo;
+                    detail.jobDetail = $scope.model.jobDetailData.indexNo;  
                     var detailJSON = JSON.stringify(detail);
                     Factory.save(saveJobItemUrl, detailJSON,
                             function (data) {
@@ -108,6 +109,7 @@
                     });
                 };
                 $scope.ui.init = function () {
+                    $scope.ui.mode ='unselect';
                     Factory.findAll(findAllUrl, function (data) {
                         $scope.model.newJobList = data;
                         console.log(data);

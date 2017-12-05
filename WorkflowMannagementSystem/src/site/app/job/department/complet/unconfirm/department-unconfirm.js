@@ -1,6 +1,6 @@
 (function () {
     angular.module("AppModule")
-            .controller("DepatmentUnconfirmController", function ($scope, Notification, Factory) {
+            .controller("DepatmentUnconfirmController", function ($scope, $rootScope, Notification, Factory) {
                 $scope.model = {};
                 $scope.ui = {};
                 $scope.model.job = {};
@@ -11,6 +11,7 @@
                 $scope.model.ItemList = [];
                 $scope.listIndex = 0;
                 $scope.ui.rejectReasonText = false;
+                $scope.ui.mode = true;
 
                 var findAllUrl = "/api/wms/job/get-all-jobs-department-send";
                 var findAllSelectedJobDetailItemUrl = "/api/wms/job-items/get-all-item-by-job-detail/";
@@ -19,30 +20,37 @@
                 var findAllItem = "/api/wms/master/item/find-all-item";
                 var saveUrl = "/api/wms/job/save-jobs";
 
-//                $scope.ui.reset = function () {
-//                    $scope.model.job = {};
-//                    $scope.ui.selectedJobIndex = null;
-//                };
+                $scope.ui.reset = function () {
+                    $scope.model.job = {};
+                    $scope.listIndex = null;
+                };
 
                 $scope.ui.reject = function () {
-                    console.log("sasasa"); 
                     $scope.ui.rejectReasonText = !$scope.ui.rejectReasonText;
                 };
 
                 $scope.ui.approve = function () {
-                    var detail = $scope.model.job;
-                    detail.status = "COMPLETED";
-                    var detailJSON = JSON.stringify(detail);
-                    Factory.save(saveUrl, detailJSON,
-                            function (data) {
-                                Notification.success(data.indexNo + " - " + "Job Completed Success");
-                                $scope.model.newJobList.splice($scope.listIndex, 1);
-                                $scope.ui.reset();
-                            },
-                            function (data) {
-                                Notification.error(data.message);
-                            }
-                    );
+                    if ($scope.ui.mode) {
+                        $scope.ui.mode = false;
+                        var detail = $scope.model.job;
+                        detail.status = "COMPLETED";
+                        var detailJSON = JSON.stringify(detail);
+                        Factory.save(saveUrl, detailJSON,
+                                function (data) {
+                                    Notification.success(data.indexNo + " - " + "Job Completed Success");
+                                    $scope.model.newJobList.splice($scope.listIndex, 1);
+                                    $rootScope.model.map.COMPLETED += 1;
+                                    $rootScope.model.map.UNCONFIRM -= 1;
+                                    $scope.ui.reset();
+                                    $scope.ui.mode = true;
+                                    $scope.model.jobDetailList = [];
+                                },
+                                function (data) {
+                                    $scope.ui.mode = true;
+                                    Notification.error(data.message);
+                                }
+                        );
+                    }
                 };
 
                 $scope.ui.setDescription = function (job, index) {
@@ -109,6 +117,9 @@
                     return item;
                 };
                 $scope.ui.init = function () {
+                    Factory.getCountList("/api/wms/count/get-all-count", function (data) {
+                        $rootScope.model.map = data;
+                    });
                     Factory.findAll(findAllUrl, function (data) {
                         $scope.model.newJobList = data;
                     });

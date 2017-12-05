@@ -3,6 +3,7 @@
     angular.module("AppModule", [
         "ngRoute",
         "ngAnimate",
+        "ngCookies",
         "ui.bootstrap",
         "ui-notification"
     ]);
@@ -22,7 +23,7 @@
                 $routeProvider
                         //system
                         .when("/", {
-                            templateUrl: "app/system/login/login.html",
+                            templateUrl: "app/system/login.html",
                             controller: "LoginController"
                         })
                         .when("/category", {
@@ -53,7 +54,7 @@
                             templateUrl: "app/master/budget-setup/budget-setup.html",
                             controller: "BudgetSetupController"
                         })
-                 
+
                         .when("/admin-new", {
                             templateUrl: "app/job/admin/pending/new/admin-new.html",
 //                            controller: "AdminHomeController"
@@ -87,7 +88,7 @@
                             templateUrl: "app/job/admin/complete/completed/admin-completed.html",
                             controller: "AdminCompletedController"
                         })
-                         
+
                         .when("/department-new", {
                             templateUrl: "app/job/department/pending/new/department-new.html",
                             controller: "DepartmentNewController"
@@ -131,5 +132,64 @@
                         .otherwise({
                             redirectTo: "/"
                         });
+            });
+    angular.module("AppModule")
+            .run(function ($rootScope, $location, $cookieStore, $http) {
+                // keep user logged in after page refresh
+                $rootScope.globals = $cookieStore.get('globals') || {};
+                if ($rootScope.globals.currentUser) {
+                    $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+                }
+
+                $rootScope.$on('$locationChangeStart', function (event, next, current) {
+                    // redirect to login page if not logged in
+                    if ($location.path() !== '/' && !$rootScope.globals.currentUser) {
+                        $location.path('/');
+                    }
+                });
+            });
+
+    angular.module("AppModule")
+            .controller("IndexController", function ($scope, $rootScope, $timeout, Factory, $location) {
+                $rootScope.model = {};
+                $scope.ui = {};
+                $rootScope.model.map = [];
+                var countUrl = "/api/wms/count/get-all-count";
+
+                $scope.ui.logout = function () {
+                    $rootScope.value = null;
+                    $location.path("/");
+                };
+//                
+//                window.onbeforeunload = function (){
+//                    return "do you want to refresh ?";
+//                };
+
+                $scope.ui.init = function () {
+
+                    //on load get count
+                    Factory.getCountList(countUrl, function (data) {
+                        $rootScope.model.map = data;
+                    });
+                    
+//                    counter function 
+                    $scope.time = 0;
+                    var timer = function () {
+                        if ($scope.time === 60) {
+                            Factory.getCountList(countUrl, function (data) {
+                                $rootScope.model.map = data;
+                            });
+                            $scope.time = 0;
+                        }
+                        if ($scope.time < 60) {
+                            $scope.time += 1;
+                            $timeout(timer, 1000);
+                        }
+                    };
+
+                    //call time
+                    $timeout(timer, 1000);
+                };
+                $scope.ui.init();
             });
 }());

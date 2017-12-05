@@ -1,59 +1,122 @@
 (function () {
     angular.module("AppModule")
-            .controller("AdminAssignController", function ($scope, Notification, Factory) {
+            .controller("AdminAssignController", function ($scope, $rootScope, Notification, Factory) {
                 $scope.model = {};
                 $scope.ui = {};
                 $scope.model.job = {};
                 $scope.model.newJobList = [];
                 $scope.model.budgetCodeList = [];
+                $scope.model.jobDetailList = [];
+                $scope.model.employeeList = [];
                 $scope.listIndex = 0;
-                
+                $scope.ui.mode = true;
+
                 var findAllUrl = "/api/wms/job/get-all-jobs-by-department-and-assing/" + 1;
+                var findAllJobDetailByJobNoUrl = "/api/wms/job-detail/find-all-job-details-by-job/";
                 var saveUrl = "/api/wms/job/save-jobs";
+                var FindAllEmployeeUrl = "/api/wms/master/employee/find-all-employee";
+                var findAllTransactionUrl = "/api/wms/job-transaction/get-all-job-transaction/";
 
                 $scope.ui.reset = function () {
                     $scope.model.job = {};
                     $scope.ui.selectedJobIndex = null;
+                    $scope.listIndex = 0;
+                    $scope.model.employeeList = [];
                 };
 
-                $scope.ui.save = function () {
-                    var detail = $scope.model.job;
-                    detail.status = "UNAPPROVE";
-                    var detailJSON = JSON.stringify(detail);
-                    console.log(detailJSON);
-                    Factory.save(saveUrl, detailJSON,
-                            function (data) {
-                                Notification.success(data.indexNo + " - " + "Job Send To Approval");
-                                $scope.model.newJobList.splice($scope.listIndex , 1);
-                                $scope.ui.reset();
-                            },
-                            function (data) {
-                                Notification.error(data.message);
-                            }
-                    );
+                $scope.ui.finish = function () {
+                        if ($scope.ui.mode) {
+                            $scope.ui.mode = false;
+                        var detail = $scope.model.job;
+                        detail.status = "FINISH";
+                        var detailJSON = JSON.stringify(detail);
+                        Factory.save(saveUrl, detailJSON,
+                                function (data) {
+                                    Notification.success(data.indexNo + " - " + "Job Finish Mannual success!!!");
+                                    $scope.model.newJobList.splice($scope.listIndex, 1);
+                                    $rootScope.model.map.FINISH += 1;
+                                    $rootScope.model.map.ASSIGN -= 1;
+                                    $scope.ui.reset();
+                                    $scope.ui.mode = true;
+                                    $scope.model.employeeList = [];
+                                },
+                                function (data) {
+                                    Notification.error(data.message);
+                                    $scope.ui.mode = true;
+                                }
+                        );
+                    }
                 };
-                
-                $scope.ui.setDescription = function (job , index) {
+
+                $scope.ui.setDescription = function (job, index) {
                     $scope.listIndex = index;
                     $scope.ui.selectedJobIndex = job.indexNo;
+                    $scope.model.getSelectedJobDetailItem(job.indexNo);
+                    $scope.model.job.clientDescription = job.clientDescription;
                     $scope.model.job = job;
-//                    $scope.model.job.description = job.clientDescription;
+                    $scope.ui.jobTransactions(job.indexNo);
+                };
+                
+                $scope.ui.jobTransactions = function (indexNo) {
+                    Factory.findAll(findAllTransactionUrl+indexNo, function (data) {
+                        $scope.model.transactionList = data;
+                    });
                 };
 
-                $scope.ui.budgetCodeLabel = function (indexNo) {
-                    var budgetCode;
-                    angular.forEach($scope.model.budgetCodeList, function (value) {
+                $scope.model.getSelectedJobDetailItem = function (indexNo) {
+                    Factory.findAll(findAllJobDetailByJobNoUrl + indexNo, function (data) {
+                        $scope.model.jobDetailList = data;
+                    });
+                };
+
+                $scope.ui.employeeLable = function (indexNo) {
+                    var employee;
+                    angular.forEach($scope.model.employeeList, function (value) {
                         if (value.indexNo === parseInt(indexNo)) {
-                            budgetCode = value.code;
+                            employee = value.name;
                             return;
                         }
                     });
-                    return budgetCode;
+                    return employee;
                 };
 
+                $scope.styleColor = function (status) {
+                    if (status === 'NEW') {
+                        return {color: status.color};
+                    } else if (status === 'NEW') {
+
+                    }
+                };
+
+//                $scope.ui.changeColour = function (status){
+//                    if (status ==='NEW') {
+//                        document.getElementById("status").style.background = "green";
+//                        document.getElementById("status").style.color = "white";
+////                        statuss = status;
+//                        return status;
+//                    }else if (status ==='ONGOING') {
+//                        document.getElementById("status").style.background = "blue";
+//                        document.getElementById("status").style.color = "white";
+////                        statuss = status;
+//                        return status;
+//                    }else if (status ==='FINISH') {
+//                        document.getElementById("status").style.background = "green";
+//                        document.getElementById("status").style.color = "white";
+////                        statuss = status;
+//                        return status;
+//                    }
+//                    return status;
+//                };
+
                 $scope.ui.init = function () {
+                    Factory.getCountList("/api/wms/count/get-all-count", function (data) {
+                        $rootScope.model.map = data;
+                    });
                     Factory.findAll(findAllUrl, function (data) {
                         $scope.model.newJobList = data;
+                    });
+                    Factory.findAll(FindAllEmployeeUrl, function (data) {
+                        $scope.model.employeeList = data;
                     });
                 };
                 $scope.ui.init();
