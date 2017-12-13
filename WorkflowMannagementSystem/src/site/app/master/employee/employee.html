@@ -82,7 +82,7 @@
                 <col style="width: 25%">
                 <col style="width: 20%">
                 <tbody>
-                    <tr ng-repeat="employee in model.employeeList">
+                    <tr ng-repeat="employee in model.employeeList | orderBy:'indexNo'">
                         <td>{{employee.indexNo}}</td>
                         <td>{{employee.name}}</td>
                         <td>{{employee.mobile}}</td>

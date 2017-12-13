@@ -1,6 +1,6 @@
 (function () {
     angular.module("AppModule")
-            .controller("EmployeeNewController", function ($scope, Notification, Factory, $filter) {
+            .controller("EmployeeNewController", function ($scope, Notification, Factory, $filter, $rootScope) {
                 $scope.model = {};
                 $scope.ui = {};
                 $scope.model.job = {};
@@ -11,7 +11,7 @@
                 $scope.model.itemList = [];
                 $scope.listIndex = 0;
                 
-                var findAllUrl = "/api/wms/job-detail/get-all-job-detail-by-employee-and-new/" + 1;
+                var findAllUrl = "/api/wms/job-detail/get-all-job-detail-by-user-and-status/"  + $rootScope.globals.currentUser.indexNo + "/" + "NEW";
                 var findAllEmployeeUrl = "/api/wms/master/employee/find-all-employee";
                 var findAllJobItemsUrl = "/api/wms/job-items/get-all-item-by-job-detail/";
                 var findAllItemUrl = "/api/wms/master/item/find-all-item";
@@ -65,6 +65,7 @@
                 $scope.ui.saveJobItems = function () {
                     var detail = $scope.model.adminJobItemData;
                     detail.jobDetail = $scope.model.jobDetailData.indexNo;
+                    detail.user = $rootScope.globals.currentUser.indexNo;
                     var detailJSON = JSON.stringify(detail);
                     Factory.save(saveJobItemUrl, detailJSON,
                             function (data) {

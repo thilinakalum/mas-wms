@@ -1,6 +1,6 @@
 (function () {
-    var factory = function (DepartmentHomeJobService, DepartmentHomeJobModelFactory, $q, $filter) {
-        
+    var factory = function (DepartmentHomeJobService, DepartmentHomeJobModelFactory, $q, $filter, $rootScope) {
+
         function DepartmentModel() {
             this.constructor();
         };
@@ -10,12 +10,14 @@
             pendingJobList: [],
             categoryList: [],
             transactionList: [],
+            userList: [],
+            departmentList: [],
 
             constructor: function () {
                 var that = this;
-                this.depatmentJobData = DepartmentHomeJobModelFactory.newJobData();
+                that.depatmentJobData = DepartmentHomeJobModelFactory.newJobData();
 
-                DepartmentHomeJobService.getAllPendingJobsByDepartment(1)
+                DepartmentHomeJobService.getAllPendingJobsByDepartmentAndStatus($rootScope.globals.currentUser.indexNo)
                         .success(function (data) {
                             that.pendingJobList = data;
                         });
@@ -23,22 +25,31 @@
                         .success(function (data) {
                             that.categoryList = data;
                         });
+                DepartmentHomeJobService.getAllUsers()
+                        .success(function (data) {
+                            that.userList = data;
+                        });
+                DepartmentHomeJobService.getAllDepartments()
+                        .success(function (data) {
+                            that.departmentList = data;
+                        });
             },
-            jobTransactions : function (indexNo){
+            jobTransactions: function (indexNo) {
                 var that = this;
                 DepartmentHomeJobService.findAllTransaction(indexNo)
                         .success(function (data) {
-                           that.transactionList= data;
+                            that.transactionList = data;
                         })
                         .error(function () {
-                            
+
                         });
             },
             saveNewJob: function () {
                 var that = this;
                 var defer = $q.defer();
-                that.depatmentJobData.user = 1;
                 that.depatmentJobData.status = "NEW";
+                that.depatmentJobData.user = $rootScope.globals.currentUser.indexNo;
+                that.depatmentJobData.branch = $rootScope.globals.currentUser.branch;
                 that.depatmentJobData.date = $filter('date')(new Date(), 'yyyy-MM-dd');
                 DepartmentHomeJobService.saveJobs(JSON.stringify(that.depatmentJobData))
                         .success(function (data) {

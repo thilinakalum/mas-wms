@@ -36,4 +36,8 @@ public class EmployeeService {
         }
     }
 
+    public List<Employee> getAllEmployeeByType() {
+        return employeeRepository.findByType("WORKER");
+    }
+
 }

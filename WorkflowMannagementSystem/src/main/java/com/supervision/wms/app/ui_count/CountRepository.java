@@ -16,9 +16,23 @@ import org.springframework.data.repository.query.Param;
  */
 public interface CountRepository extends JpaRepository<Job, Integer> {
 
-    @Query(value = "select count(job.index_no) as cuont\n"
+    @Query(value = "select count(job.index_no) as count\n"
             + "from job\n"
             + "where job.`status`=:status", nativeQuery = true)
     public Integer findByStatus(@Param("status")String NEW);
+    
+//    @Query(value = "select count(job.index_no) as count\n"
+//            + "from job\n"
+//            + "left join user on user.index_no=job.user\n"
+//            + "left join department on department.index_no=user.department\n"
+//            + "where department.index_no =(select user.department from user where user.index_no= :user )\n"
+//            + "and job.`status`= :status ", nativeQuery = true)
+//    public Integer findByStatusAndLoginUserDepartment(@Param("user")int user, @Param("status")String status);
+    
+    @Query(value = "select count(job.index_no) as count\n" 
+            + "from job\n" 
+            + "where job.department =(select user.department from user where user.index_no= :user )\n" 
+            + "and job.`status`= :status", nativeQuery = true)
+    public Integer findByStatusAndLoginUserDepartment(@Param("user")int user, @Param("status")String status);
 
 }

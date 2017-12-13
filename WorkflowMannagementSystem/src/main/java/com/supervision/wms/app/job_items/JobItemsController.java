@@ -29,9 +29,6 @@ public class JobItemsController {
     
     @RequestMapping(value = "/save-job-items" , method = RequestMethod.POST)
     public JobItems saveJobItems(@RequestBody JobItems jobItems){
-        System.out.println("___________________");
-        System.out.println(jobItems.getItem());
-        System.out.println("___________________");
         return jobItemsService.saveJobItems(jobItems);
     }
     @RequestMapping(value = "/get-all-item-by-job-detail/{indexNo}" , method = RequestMethod.GET)

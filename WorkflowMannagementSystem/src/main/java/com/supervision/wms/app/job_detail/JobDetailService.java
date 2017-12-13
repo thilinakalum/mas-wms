@@ -9,6 +9,9 @@ import com.supervision.wms.app.job.JobRepository;
 import com.supervision.wms.app.job.JobService;
 import com.supervision.wms.app.job.model.Job;
 import com.supervision.wms.app.job_detail.model.JobDetail;
+import com.supervision.wms.app.job_detail_transaction.JobDetailTransactionRepository;
+import com.supervision.wms.app.job_detail_transaction.model.JobDetailTransaction;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,8 @@ public class JobDetailService {
 
     @Autowired
     private JobDetailRepository jobDetailRepository;
+    @Autowired
+    private JobDetailTransactionRepository jobDetailTransactionRepository;
 
     @Autowired
     private JobRepository jobRepository;
@@ -39,15 +44,26 @@ public class JobDetailService {
         return jobDetailRepository.findByJob(indexNo);
     }
 
+    @Transactional
     public JobDetail saveJobDetail(JobDetail jobDetail) {
+
         JobDetail jobdetail = jobDetailRepository.save(jobDetail);
+        
+        JobDetailTransaction detailTransactionData = new JobDetailTransaction();
+        
+        detailTransactionData.setDate(new Date());
+        detailTransactionData.setTime(new Date());
+        detailTransactionData.setDescription(jobDetail.getAdminDescription());
+        detailTransactionData.setJobDetail(jobDetail.getIndexNo());
+        detailTransactionData.setUser(jobDetail.getUser());
+        detailTransactionData.setStatus(jobDetail.getStatus());
+        
+        jobDetailTransactionRepository.save(detailTransactionData);
+        
         Job job = jobRepository.findOne(jobDetail.getJob());
         List<JobDetail> jobDetailList = jobDetailRepository.getAllJobsByJobNoAndStatus(jobDetail.getJob());
-        System.out.println(jobDetailList.size());
+        
         if (jobDetailList.isEmpty()) {
-            System.out.println("++++++++++++++++++++++++++");
-            System.out.println("EMTY");
-            System.out.println("++++++++++++++++++++++++++");
             job.setStatus("FINISH");
             job.setUser(1);
             jobService.saveJobs(job);
@@ -55,20 +71,24 @@ public class JobDetailService {
         return jobdetail;
     }
 
-    public List<JobDetail> getAllJobsDetailByEmployee(int user) {
-        return jobDetailRepository.getAllJobsDetailByEmployeeAndNew(user);
-    }
-
-    public List<JobDetail> getAllJobsDetailByEmployeeAndRunning(int user) {
-        return jobDetailRepository.getAllJobsDetailByEmployeeAndRunning(user);
-    }
-
-    public List<JobDetail> getAllJobsDetailByEmployeeAndFinish(int user) {
-        return jobDetailRepository.getAllJobsDetailByEmployeeAndFinish(user);
-    }
+//    public List<JobDetail> getAllJobsDetailByEmployee(int user) {
+//        return jobDetailRepository.getAllJobsDetailByEmployeeAndNew(user);
+//    }
+//
+//    public List<JobDetail> getAllJobsDetailByEmployeeAndRunning(int user) {
+//        return jobDetailRepository.getAllJobsDetailByEmployeeAndRunning(user);
+//    }
+//
+//    public List<JobDetail> getAllJobsDetailByEmployeeAndFinish(int user) {
+//        return jobDetailRepository.getAllJobsDetailByEmployeeAndFinish(user);
+//    }
 
     public void deleteJobDetail(Integer indexNo) {
         jobDetailRepository.delete(indexNo);
+    }
+
+    public List<JobDetail> jobDetailService(int user, String status) {
+        return jobDetailRepository.jobDetailService(user,status);
     }
 
 }

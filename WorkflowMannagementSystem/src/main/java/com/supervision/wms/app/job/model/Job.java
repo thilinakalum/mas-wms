@@ -70,6 +70,9 @@ public class Job implements Serializable {
 
     @Column(name = "branch")
     private Integer branch;
+    
+    @Column(name = "department")
+    private Integer department;
 
     public Job() {
     }
@@ -177,5 +180,13 @@ public class Job implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
+    public Integer getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Integer department) {
+        this.department = department;
+    }
+ 
 }

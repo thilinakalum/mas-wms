@@ -40,216 +40,191 @@
                 <!-- main navigation -->
                 <nav role="navigation">
                     <ul class="nav">
-                        <li>
+                        <li ng-show="globals.currentUser.type === 'ADMIN'">
                             <a href="javascript:;">
-                                <span>Admin<i></i></span>
-                                <span> <label class="label label-lg label-danger" style=" border-radius: 100px;"></label></span>
+                                <span>Pending<i></i></span>
+                                <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['NEW']+model.map['UNAPPROVE']+model.map['APPROVE']+model.map['REJECT']===0?'':model.map['NEW']+model.map['UNAPPROVE']+model.map['APPROVE']+model.map['REJECT']}}</label></span>
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="javascript:;">
-                                        <span>Pending<i></i></span>
-                                        <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['NEW']+model.map['UNAPPROVE']+model.map['APPROVE']+model.map['REJECT']===0?'':model.map['NEW']+model.map['UNAPPROVE']+model.map['APPROVE']+model.map['REJECT']}}</label></span>
+                                    <a href="#/admin-new">
+                                        <span>New</span>
+                                        <span><label class="label label-lg label-primary" style=" border-radius: 100px;">{{model.map['NEW']===0?'':model.map['NEW']}}</label></span>
                                     </a>
-                                    <ul class="sub-menu">
-                                        <li>
-                                            <a href="#/admin-new">
-                                                <span>New</span>
-                                                <span><label class="label label-lg label-primary" style=" border-radius: 100px;">{{model.map['NEW']===0?'':model.map['NEW']}}</label></span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#/admin-unapprove">
-                                                <span>Unapprove</span>
-                                                <span> <label class="label label-lg label-warning" style=" border-radius: 100px;">{{model.map['UNAPPROVE']===0?'':model.map['UNAPPROVE']}}</label></span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#/admin-approve">
-                                                <span>Approve</span>
-                                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['APPROVE']===0?'':model.map['APPROVE']}}</label></span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#/admin-reject">
-                                                <span>Reject</span>
-                                                <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['REJECT']===0?'':model.map['REJECT']}}</label></span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#/admin-unapprove">
+                                        <span>Unapprove</span>
+                                        <span> <label class="label label-lg label-warning" style=" border-radius: 100px;">{{model.map['UNAPPROVE']===0?'':model.map['UNAPPROVE']}}</label></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/admin-approve">
+                                        <span>Approve</span>
+                                        <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['APPROVE']===0?'':model.map['APPROVE']}}</label></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/admin-reject">
+                                        <span>Reject</span>
+                                        <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['REJECT']===0?'':model.map['REJECT']}}</label></span>
+                                    </a>
                                 </li>
                             </ul>
+                        </li>
+                        <li ng-show="globals.currentUser.type === 'ADMIN'">
+                            <a href="javascript:;">
+                                <span>On Going<i></i></span>
+                                <span> <label class="label label-lg label-warning" style=" border-radius: 100px;">{{model.map['ASSIGN']+model.map['FINISH']===0?'':model.map['ASSIGN']+model.map['FINISH']}}</label></span>
+                            </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="javascript:;">
-                                        <span>On Going<i></i></span>
-                                        <span> <label class="label label-lg label-warning" style=" border-radius: 100px;">{{model.map['ASSIGN']+model.map['FINISH']===0?'':model.map['ASSIGN']+model.map['FINISH']}}</label></span>
+                                    <a href="#/admin-assign">
+                                        <span>Assign</span>
+                                        <span> <label class="label label-lg label-primary" style=" border-radius: 100px;">{{model.map['ASSIGN']===0?'':model.map['ASSIGN']}}</label></span>
                                     </a>
-                                    <ul class="sub-menu">
-                                        <li>
-                                            <a href="#/admin-assign">
-                                                <span>Assign</span>
-                                                <span> <label class="label label-lg label-primary" style=" border-radius: 100px;">{{model.map['ASSIGN']===0?'':model.map['ASSIGN']}}</label></span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#/admin-finish">
-                                                <span>Finish</span>
-                                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['FINISH']===0?'':model.map['FINISH']}}</label></span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#/admin-finish">
+                                        <span>Finish</span>
+                                        <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['FINISH']===0?'':model.map['FINISH']}}</label></span>
+                                    </a>
                                 </li>
                             </ul>
+                        </li>
+                        <li ng-show="globals.currentUser.type === 'ADMIN'">
+                            <a href="javascript:;">
+                                <span>Completed<i></i></span>
+                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']+model.map['COMPLETED']===0?'':model.map['UNCOMFIRM']+model.map['COMPLETED']}}</label></span>
+                            </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="javascript:;">
-                                        <span>Completed<i></i></span>
-                                        <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']+model.map['COMPLETED']===0?'':model.map['UNCOMFIRM']+model.map['COMPLETED']}}</label></span>
+                                    <a href="#/admin-department-send">
+                                        <span>Department Send</span>
+                                        <span> <label class="label label-lg label-primary" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']===0?'':model.map['UNCOMFIRM']}}</label></span>
                                     </a>
-                                    <ul class="sub-menu">
-                                        <li>
-                                            <a href="#/admin-department-send">
-                                                <span>Department Send</span>
-                                                <span> <label class="label label-lg label-primary" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']===0?'':model.map['UNCOMFIRM']}}</label></span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#/department-confirm">
-                                                <span>Completed</span>
-                                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['COMPLETED']===0?'':model.map['COMPLETED']}}</label></span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#/department-confirm">
+                                        <span>Completed</span>
+                                        <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['COMPLETED']===0?'':model.map['COMPLETED']}}</label></span>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
 
-                        </li>
-                        <li>
-                            <a href="javascript:;">
-                                <span>Department<i></i></span>
-                                <span> <label class="label label-lg label-danger" style=" border-radius: 100px;"></label></span>
-                            </a>
 
-                            <ul class="sub-menu">
-                                <li>
-                                    <a href="javascript:;">
-                                        <span>Pending<i></i></span>
-                                        <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['NEW']+model.map['UNAPPROVE']+model.map['APPROVE']+model.map['REJECT']===0?'':model.map['NEW']+model.map['UNAPPROVE']+model.map['APPROVE']+model.map['REJECT']}}</label></span>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li>
-                                            <a href="#/department-new">
-                                                <span>New</span>
-                                                <span> <label class="label label-lg label-primary" style=" border-radius: 100px;">{{model.map['NEW']===0?'':model.map['NEW']}}</label></span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#/department-unapprove">
-                                                <span>Unapprove</span>
-                                                <span> <label class="label label-lg label-warning" style=" border-radius: 100px;">{{model.map['UNAPPROVE']===0?'':model.map['UNAPPROVE']}}</label></span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#/department-approve">
-                                                <span>Approved</span>
-                                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['APPROVE']===0?'':model.map['APPROVE']}}</label></span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#/department-reject">
-                                                <span>Rejected</span>
-                                                <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['REJECT']===0?'':model.map['REJECT']}}</label></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <ul class="sub-menu">
-                                <li>
-                                    <a href="javascript:;">
-                                        <span>On Going<i></i></span>
-                                        <span> <label class="label label-lg label-warning" style=" border-radius: 100px;"></label></span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="sub-menu">
-                                <li>
-                                    <a href="javascript:;">
-                                        <span>Completed<i></i></span>
-                                        <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']+model.map['COMPLETED']===0?'':model.map['UNCOMFIRM']+model.map['COMPLETED']}}</label></span>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li>
-                                            <a href="#/department-unconfirm">
-                                                <span>Unconfirmed</span>
-                                                <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']===0?'':model.map['UNCOMFIRM']}}</label></span>
-                                            </a>
-                                            <a href="#/department-confirm">
-                                                <span>Completed</span>
-                                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['COMPLETED']===0?'':model.map['COMPLETED']}}</label></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li> 
-                        <li> 
+                        <li ng-show="globals.currentUser.type === 'USER'">
                             <a href="javascript:;">
-                                <span>Worker<i></i></span>
-                                <span> <label class="label label-lg label-danger" style=" border-radius: 100px;"></label></span>
+                                <span>Pending<i></i></span>
+                                <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['DEPARTMENT_NEW']+model.map['DEPARTMENT_UNAPPROVE']+model.map['DEPARTMENT_APPROVE']+model.map['DEPARTMENT_REJECT']===0?'':model.map['DEPARTMENT_NEW']+model.map['DEPARTMENT_UNAPPROVE']+model.map['DEPARTMENT_APPROVE']+model.map['DEPARTMENT_REJECT']}}</label></span>
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="javascript:;">
-                                        <span>Pending<i></i></span>
-                                        <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">3</label></span>
+                                    <a href="#/department-new">
+                                        <span>New</span>
+                                        <span> <label class="label label-lg label-primary" style=" border-radius: 100px;">{{model.map['DEPARTMENT_NEW']===0?'':model.map['DEPARTMENT_NEW']}}</label></span>
                                     </a>
-                                    <ul class="sub-menu">
-                                        <li>
-                                            <a href="#/employee-new">
-                                                <span>New</span>
-                                                <span> <label class="label label-lg label-info" style=" border-radius: 100px;">03</label></span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#/department-unapprove">
+                                        <span>Unapprove</span>
+                                        <span> <label class="label label-lg label-warning" style=" border-radius: 100px;">{{model.map['DEPARTMENT_UNAPPROVE']===0?'':model.map['DEPARTMENT_UNAPPROVE']}}</label></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/department-approve">
+                                        <span>Approved</span>
+                                        <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['DEPARTMENT_APPROVE']===0?'':model.map['DEPARTMENT_APPROVE']}}</label></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/department-reject">
+                                        <span>Rejected</span>
+                                        <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['DEPARTMENT_REJECT']===0?'':model.map['DEPARTMENT_REJECT']}}</label></span>
+                                    </a>
                                 </li>
                             </ul>
+                        </li>
+
+                        <li ng-show="globals.currentUser.type === 'USER'">
+                            <a href="javascript:;">
+                                <span>On Going<i></i></span>
+                                <span> <label class="label label-lg label-warning" style=" border-radius: 100px;"></label></span>
+                            </a>
+                        </li>
+
+                        <li ng-show="globals.currentUser.type === 'USER'">
+                            <a href="javascript:;">
+                                <span>Completed<i></i></span>
+                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']+model.map['COMPLETED']===0?'':model.map['UNCOMFIRM']+model.map['COMPLETED']}}</label></span>
+                            </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="javascript:;">
-                                        <span>On Going<i></i></span>
-                                        <span> <label class="label label-lg label-warning" style=" border-radius: 100px;">3</label></span>
+                                    <a href="#/department-unconfirm">
+                                        <span>Unconfirmed</span>
+                                        <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']===0?'':model.map['UNCOMFIRM']}}</label></span>
                                     </a>
-                                    <ul class="sub-menu">
-                                        <li>
-                                            <a href="#/employee-running">
-                                                <span>Runing</span>
-                                                <span> <label class="label label-lg label-info" style=" border-radius: 100px;">03</label></span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <a href="#/department-confirm">
+                                        <span>Completed</span>
+                                        <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['COMPLETED']===0?'':model.map['COMPLETED']}}</label></span>
+                                    </a>
                                 </li>
                             </ul>
+                        </li>
+
+                        <li ng-show="globals.currentUser.type === 'EMPLOYEE'">
+                            <a href="javascript:;">
+                                <span>Pending<i></i></span>
+                                <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['WORKER_NEW']===0?'':model.map['WORKER_NEW']}}</label></span>
+                            </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="javascript:;">
-                                        <span>Completed<i></i></span>
-                                        <span> <label class="label label-lg label-success" style=" border-radius: 100px;">3</label></span>
+                                    <a href="#/employee-new">
+                                        <span>New</span>
+                                        <span> <label class="label label-lg label-info" style=" border-radius: 100px;">{{model.map['WORKER_NEW']===0?'':model.map['WORKER_NEW']}}</label></span>
                                     </a>
-                                    <ul class="sub-menu">
-                                        <li>
-                                            <a href="#/employee-finish">
-                                                <span>Finish</span>
-                                                <span> <label class="label label-lg label-info" style=" border-radius: 100px;">03</label></span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li ng-show="globals.currentUser.type === 'EMPLOYEE'">
+                            <a href="javascript:;">
+                                <span>On Going<i></i></span>
+                                <span> <label class="label label-lg label-warning" style=" border-radius: 100px;">{{model.map['WORKER_ONGOING']===0?'':model.map['WORKER_ONGOING']}}</label></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="#/employee-running">
+                                        <span>Runing</span>
+                                        <span> <label class="label label-lg label-info" style=" border-radius: 100px;">{{model.map['WORKER_ONGOING']===0?'':model.map['WORKER_ONGOING']}}</label></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li ng-show="globals.currentUser.type === 'EMPLOYEE'">
+                            <a href="javascript:;">
+                                <span>Completed<i></i></span>
+                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['WORKER_FINISH']===0?'':model.map['WORKER_FINISH']}}</label></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="#/employee-finish">
+                                        <span>Finish</span>
+                                        <span> <label class="label label-lg label-info" style=" border-radius: 100px;">{{model.map['WORKER_FINISH']===0?'':model.map['WORKER_FINISH']}}</label></span>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
                         <li>
+                            <a href="#/admin-new-job" ng-show="globals.currentUser.type === 'ADMIN'">
+                                <span>Admin Create Job</span>
+                                <span> <label class="label label-lg label-info" style=" border-radius: 100px;">{{model.map['WORKER_FINISH']===0?'':model.map['WORKER_FINISH']}}</label></span>
+                            </a>
+                        </li>
+
+                        <li ng-show="globals.currentUser.type === 'ADMIN'">
                             <a href="javascript:;">
                                 <span>Master<i></i></span>
                             </a>
@@ -330,14 +305,21 @@
                         </div>
                     </div>
 
-                    <ul class="nav navbar-nav navbar-right hidden-xs">
-
-                        <li>
-                            <a href="javascript:;" data-toggle="dropdown">{{}} &nbsp;<label class="glyphicon glyphicon-user"></label>
+                    <ul class="nav navbar-nav hidden-xs col-md-12 no-padding">
+                        <li class="col-md-3">
+                            <a href="javascript:;" data-toggle="dropdown"><span style="font-size: 18px;color:#283593!important;font-weight: 500;text-transform: uppercase;">{{ui.setDepartmentLabel(globals.currentUser.indexNo)}}</span>
                             </a>
-                            <ul class="dropdown-menu">
+                        </li>
+                        <li class="col-md-6">
+                            <a href="javascript:;" data-toggle="dropdown"><span class="label label-info" style="font-size: 15px"></span>
+                            </a>
+                        </li>
+                        <li class="col-md-3 text-right no-padding">
+                            <a href="javascript:;" data-toggle="dropdown"><span class="label label-info" style="font-size: 15px">Login User : {{globals.currentUser.username}}</span>&nbsp;<label class="glyphicon glyphicon-user"></label>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
                                 <li>
-                                    <a ng-click="ui.logout()">Logout</a>
+                                    <a ng-click="ui.logout()"><span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;&nbsp;Logout</a>
                                 </li>
                             </ul>
 
@@ -355,16 +337,16 @@
         <!-- endinject -->
 
         <script>
-            var myVar;
+                    var myVar;
 
-            function myFunction() {
-                myVar = setTimeout(showPage, 1000);
-            }
+                    function myFunction() {
+                        myVar = setTimeout(showPage, 1000);
+                    }
 
-            function showPage() {
-                document.getElementById("loader").style.display = "none";
-                document.getElementById("myDiv").style.display = "block";
-            }
+                    function showPage() {
+                        document.getElementById("loader").style.display = "none";
+                        document.getElementById("myDiv").style.display = "block";
+                    }
         </script>
     </body>
 </html>

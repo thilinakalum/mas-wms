@@ -1,6 +1,6 @@
 (function () {
     angular.module("AppModule")
-            .controller("EmployeeRunningController", function ($scope, Notification, Factory, $filter) {
+            .controller("EmployeeRunningController", function ($scope, Notification, Factory, $filter ,$rootScope) {
                 $scope.model = {};
                 $scope.ui = {};
                 $scope.model.job = {};
@@ -11,7 +11,7 @@
                 $scope.model.itemList = [];
                 $scope.listIndex = 0;
                 
-                var findAllUrl = "/api/wms/job-detail/get-all-job-detail-by-employee-and-running/" + 1;
+                var findAllUrl = "/api/wms/job-detail/get-all-job-detail-by-user-and-status/"  + $rootScope.globals.currentUser.indexNo + "/" + "ONGOING";
                 var findAllEmployeeUrl = "/api/wms/master/employee/find-all-employee";
                 var findAllJobItemsUrl = "/api/wms/job-items/get-all-item-by-job-detail/";
                 var findAllItemUrl = "/api/wms/master/item/find-all-item";
@@ -28,7 +28,6 @@
                     var detail = $scope.model.jobDetailData;
                     detail.status = "FINISH";
                     var detailJSON = JSON.stringify(detail);
-                    console.log(detailJSON);
                     Factory.save(saveUrl, detailJSON,
                             function (data) {
                                 Notification.success(data.indexNo + " - " + "Job Finish Success");
@@ -47,7 +46,6 @@
                     $scope.ui.selectedJobIndex = job.indexNo;
                     $scope.model.jobDetailData = job;
                     $scope.model.jobDetailData.deadlineDate = $filter('date')(job.deadlineDate, 'yyyy-MM-dd');
-//                    $scope.model.jobDetailData.deadlineTime = $filter('time')(job.deadlineTime, 'HH:mm:ss');
                     $scope.model.jobDetailData.description = job.adminDescription;
                     $scope.ui.loadJobItems(job.indexNo);
                 };
@@ -64,7 +62,8 @@
                 
                 $scope.ui.saveJobItems = function () {
                     var detail = $scope.model.adminJobItemData;
-                    detail.jobDetail = $scope.model.jobDetailData.indexNo;  
+                    detail.jobDetail = $scope.model.jobDetailData.indexNo; 
+                    detail.user = $rootScope.globals.currentUser.indexNo;
                     var detailJSON = JSON.stringify(detail);
                     Factory.save(saveJobItemUrl, detailJSON,
                             function (data) {

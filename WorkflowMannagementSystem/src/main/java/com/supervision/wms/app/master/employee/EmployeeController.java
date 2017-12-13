@@ -31,6 +31,10 @@ public class EmployeeController {
     public List<Employee> getAllEmployee(){
         return employeeService.getAllEmployee();
     }
+    @RequestMapping(value = "/find-all-employee-by-type" , method = RequestMethod.GET)
+    public List<Employee> getAllEmployeeByType(){
+        return employeeService.getAllEmployeeByType();
+    }
     @RequestMapping(value = "/save-employee" , method = RequestMethod.POST)
     public Employee saveEmployee(@RequestBody Employee employee){
         employee.setBranch(1);

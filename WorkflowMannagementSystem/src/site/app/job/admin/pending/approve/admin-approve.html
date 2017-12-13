@@ -24,6 +24,7 @@
                             <label class="control-label" style="margin-top: 5px">Status : <span><label class="control-label label-danger">{{jobs.status}}</label></span></label><br>
                             <label class="control-label" style="margin-top: 5px">Required Date : {{jobs.requiredDate|date:'yyyy-MM-dd'}}</label><br>
                             <label class="control-label" style="margin-top: 5px">Required Time : {{jobs.requiredTime|date:'h:mma'}}</label><br>
+                            <label class="control-label" style="margin-top: 5px">Send Department : {{ui.setDepartmentLabel(jobs.user)}}</label><br>
                         </td>
                     </tr>
                 </tbody>
@@ -243,7 +244,7 @@
                         <label class="label label-info" style="margin-top: 5px">Status : <span><label class="control-label label-danger">{{jobTrans.status}}</label></span></label><br>
                         <label class="label label-info" style="margin-top: 5px">Date : {{jobTrans.date|date:'yyyy-MM-dd'}}</label>
                         <label class="label label-info" style="margin-top: 5px">Time : {{jobTrans.time|date:'h:mma'}}</label><br>
-                        <label class="label label-info" style="margin-top: 5px">User : {{model.employeeLable(jobTrans.user)}}</label><br>
+                        <label class="label label-info" style="margin-top: 5px">User : {{ui.userLabel(jobTrans.user)}}</label><br>
                     </td>
                 </tr>  
             </tbody>

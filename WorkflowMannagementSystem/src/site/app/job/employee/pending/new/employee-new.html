@@ -1,113 +1,8 @@
-
-<!--        <div style="height: calc(100vh - 450px)">
-            <table class="table">
-                <tbody style="background-color: #ffffff">
-                    <tr>
-                        <td class="col-md-12">
-                            <label class="control-label" > Description :</label>
-                            <textarea class="form-control" style="font-size: 20px; height: 13vh" readonly="true" ng-model="model.jobDetailData.description" ></textarea>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="col-md-12" style="height: 145px;background-color: white">
-                <div class="col-md-6" style="display: block;">
-                    <div style="margin-top: 8px">
-                        <label class="control-label">Employee </label>
-                        <input type="text" class="form-control" readonly="true" ng-model="model.jobDetailData.employee" uib-typeahead="employee.indexNo as (employee.indexNo + ' - ' + employee.name) for employee in model.employeeList |filter:$viewValue|limitTo:10" typeahead-input-formatter="ui.employeeLabel(model.jobDetailData.employee);">
-                    </div>
-                    <div style="margin-top: 8px">
-                        <label class="control-label" >Deadline Date :</label>
-                        <input type="text" class="form-control" readonly="true" ng-model="model.jobDetailData.deadlineDate">
-                    </div>
-                </div>
-                <div class="col-md-6" style="display: block;">
-                    <div style="margin-top: 8px">
-                        <label class="control-label">Deadline Time :</label>
-                        <input type="text" class="form-control" readonly="true" ng-model="model.jobDetailData.deadlineTime">
-                    </div>
-                    <button type="button" class="col-md-4 btn btn-info btn-md " ng-disabled="ui.mode !== 'select'" style="margin-top: 36px;border-radius: 0px" ng-click="ui.addItems()">
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Add Items
-                    </button>
-                </div>
-            </div> 
-        </div>
-        <div ng-show="ui.addItem">
-            <form ng-submit='ui.saveJobItems()'>
-                <table class="table">
-                    <tbody>
-                        <tr style="background-color: #ffffff">
-                            <td class="col-md-3">
-                                <label class="control-label"  style="margin-top: 9px" >Item :</label>
-                                <input type="text" required class="form-control" ng-model="model.adminJobItemData.item" 
-                                       uib-typeahead="items.indexNo as (items.indexNo + ' - ' + items.name) for items in model.itemList |filter:$viewValue|limitTo:10"
-                                       typeahead-input-formatter="ui.itemLable(model.adminJobItemData.item);" 
-                                       typeahead-on-select='ui.onSelect($model)'
-                                       typeahead-editable='false'>
-                            </td>
-                            <td class="col-md-5">
-                                <div class="input-group input-group-md">
-                                    <label class="control-label" style="margin-top: 9px">Qty :</label>
-                                    <input type="number" required class="form-control" ng-model="model.adminJobItemData.qty">
-                                </div>
-                            </td>
-                            <td class="col-md-4">
-                                <div class="input-group input-group-md">
-                                    <label class="control-label" style="margin-top: 9px">Unit Price:</label>
-                                    <input type="text" required class="form-control" ng-model="model.adminJobItemData.unitPrice">
-
-                                    <span class="input-group-btn" >
-                                        <button type="submit" class="btn btn-success btn-md pull-right" style="margin-top:31px; margin-left: 20px" ><i class="glyphicon glyphicon-plus-sign"></i></button>
-                                    </span>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
-        </div>
-        <div class="smart-scroll-y" style="height: calc(100vh - 525px);">
-            <table class="table table-hover" style="margin-bottom: 0px;">
-                <col style="width: 25%">
-                <col style="width: 35%">
-                <col style="width: 20%">
-                <col style="width: 10%">
-                <thead style="background-color: #eeeeee">
-                    <tr>
-                        <td>Item</td> 
-                        <td>Qty</td> 
-                        <td>price ( Rs: )</td> 
-                        <td>&nbsp;</td>
-                    </tr>
-                </thead>
-            </table>
-            <table class="table table-hover">
-                <col style="width: 25%">
-                <col style="width: 40%">
-                <col style="width: 20%">
-                <col style="width: 10%">
-                <tbody>
-                    <tr ng-repeat="jobItems in model.jobItemList">
-                        <td>{{ui.itemLable(jobItems.item)}}</td>
-                        <td>{{jobItems.qty}}</td>
-                        <td>{{jobItems.unitPrice}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>-->
-
-
-
-
-
-
-
 <div class="col-md-3 background-blue-dark">
     <h4 class="text-center background-md-header"> JOBS</h4>
 </div>
 <div class="col-md-6 background-blue-light">
-    <h4 class="text-center background-md-header"> ADMIN NEW</h4>
+    <h4 class="text-center background-md-header"> EMPLOYEE NEW</h4>
 </div>
 <div class="col-md-3 background-blue-dark">
     <h4 class="text-center background-md-header"> JOBS HISTORY</h4>
@@ -121,7 +16,7 @@
             </span>
         </div>
         <div class="smart-scroll-y" style="height: calc(100vh - 172px);" ng-show="model.newJobList.length">
-            <table class="table table-hover" style="margin-top: 20px">
+            <table class="table table-hover" style="margin-top: 20px; margin-bottom: 0px">
                 <tbody>
                     <tr ng-repeat="jobs in model.newJobList| filter:{name:model.search.indexNo} | orderBy:'indexNo' ">
                         <td class="col-sm-3" ng-click="ui.setDescription(jobs, $index)" ng-class="ui.selectedJobIndex === jobs.indexNo ? 'selected' : ''">
@@ -140,7 +35,7 @@
     </div>
 </div>
 <div class="col-md-6 background-white">
-    <div class=" smart-scroll-y padding-top-10" style="height: calc(100vh - 94px);">
+    <div class=" smart-scroll-y" style="height: calc(100vh - 94px);">
         <div style="height: calc(100vh - 477px)">
             <table class="table" style="margin-bottom: 0px;">
                 <tbody style="background-color: #ffffff">

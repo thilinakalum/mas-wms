@@ -129,6 +129,10 @@
                             templateUrl: "app/job/employee/complete/finish/employee-finish.html",
                             controller: "EmployeeFinishController"
                         })
+                        .when("/admin-new-job", {
+                            templateUrl: "app/job/admin/pending/new/admin-new-job/admin-new-job.html",
+                            controller: "AdminNewJobController"
+                        })
                         .otherwise({
                             redirectTo: "/"
                         });
@@ -153,32 +157,94 @@
             .controller("IndexController", function ($scope, $rootScope, $timeout, Factory, $location) {
                 $rootScope.model = {};
                 $scope.ui = {};
+                $scope.model.user = {};
                 $rootScope.model.map = [];
-                var countUrl = "/api/wms/count/get-all-count";
+                var adminCountUrl = "/api/wms/count/get-all-admin-count";
+                var departmentCountUrl = "/api/wms/count/get-all-department-count/";
+                var employeeCountUrl = "/api/wms/count/get-all-workers-count/";
+//                var DepartmentCountUrl = "/api/wms/count/get-all-department-count/" + $rootScope.globals.currentUser.indexNo;
+                var findAllUserUrl = "/api/wms/master/user/find-all-user";
+                var findAllDepartmentUrl = "/api/wms/master/department/find-all-department";
 
                 $scope.ui.logout = function () {
                     $rootScope.value = null;
                     $location.path("/");
                 };
-//                
+
 //                window.onbeforeunload = function (){
 //                    return "do you want to refresh ?";
 //                };
 
+                $scope.ui.setDepartmentLabel = function (userIndexNo) {
+                    var departmentName;
+                    angular.forEach($scope.model.userList, function (value) {
+                        var department;
+                        if (value.indexNo === parseInt(userIndexNo)) {
+                            department = value.department;
+                            angular.forEach($scope.model.departmentList, function (value) {
+                                if (value.indexNo === parseInt(department)) {
+                                    departmentName = value.name;
+                                    return;
+                                }
+                            });
+                        }
+                    });
+                    return departmentName;
+                };
+
                 $scope.ui.init = function () {
+                    if (angular.isUndefined($rootScope.globals.currentUser)) {
+                        console.log("Console undifind");
+                    } else {
+                        $scope.ui.setDepartmentLabel($rootScope.globals.currentUser);
+                    }
+                    Factory.findAll(findAllUserUrl, function (data) {
+                        $scope.model.userList = data;
+                    });
+                    Factory.findAll(findAllDepartmentUrl, function (data) {
+                        $scope.model.departmentList = data;
+                    });
 
                     //on load get count
-                    Factory.getCountList(countUrl, function (data) {
-                        $rootScope.model.map = data;
-                    });
-                    
+                    if (angular.isUndefined($rootScope.globals.currentUser)) {
+                        console.log("Console undifind");
+                    } else {
+                        if ($rootScope.globals.currentUser.type === "ADMIN") {
+                            Factory.getCountList(adminCountUrl, function (data) {
+                                $rootScope.model.map = data;
+                            });
+                        } else if ($rootScope.globals.currentUser.type === "USER") {
+                            Factory.getCountList(departmentCountUrl + $rootScope.globals.currentUser.indexNo, function (data) {
+                                $rootScope.model.map = data;
+                            });
+                        } else {
+                            Factory.getCountList(employeeCountUrl + $rootScope.globals.currentUser.indexNo, function (data) {
+                                $rootScope.model.map = data;
+                            });
+                        }
+                    }
+
 //                    counter function 
                     $scope.time = 0;
                     var timer = function () {
                         if ($scope.time === 60) {
-                            Factory.getCountList(countUrl, function (data) {
-                                $rootScope.model.map = data;
-                            });
+                            if (angular.isUndefined($rootScope.globals.currentUser)) {
+                                console.log("Console undifind");
+                            } else {
+                                if ($rootScope.globals.currentUser.type === "ADMIN") {
+                                    Factory.getCountList(adminCountUrl, function (data) {
+                                        $rootScope.model.map = data;
+                                    });
+                                } else if ($rootScope.globals.currentUser.type === "USER") {
+                                    Factory.getCountList(departmentCountUrl + $rootScope.globals.currentUser.indexNo, function (data) {
+                                        $rootScope.model.map = data;
+                                    });
+                                } else {
+                                    Factory.getCountList(employeeCountUrl + $rootScope.globals.currentUser.indexNo, function (data) {
+                                        $rootScope.model.map = data;
+                                    });
+                                }
+                            }
                             $scope.time = 0;
                         }
                         if ($scope.time < 60) {

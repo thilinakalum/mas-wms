@@ -30,26 +30,30 @@ public class JobItems implements Serializable {
     @Basic(optional = false)
     @Column(name = "index_no", nullable = false)
     private Integer indexNo;
-    
+
     @Column(name = "item_name", length = 45)
     private String itemName;
-    
+
     private Integer qty;
-    
+
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "unit_price", precision = 10, scale = 4)
     private BigDecimal unitPrice;
-    
+
     @Column(name = "total_price", precision = 10, scale = 4)
     private BigDecimal totalPrice;
-    
+
     @NotNull
     @Column(name = "item")
     private Integer item;
-    
+
     @NotNull
     @Column(name = "job_detail")
     private Integer jobDetail;
+
+    @NotNull
+    @Column(name = "user")
+    private Integer user;
 
     public JobItems() {
     }
@@ -113,5 +117,13 @@ public class JobItems implements Serializable {
     public void setJobDetail(Integer jobDetail) {
         this.jobDetail = jobDetail;
     }
-    
+
+    public Integer getUser() {
+        return user;
+    }
+
+    public void setUser(Integer user) {
+        this.user = user;
+    }
+
 }

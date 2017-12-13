@@ -5,6 +5,7 @@
  */
 package com.supervision.wms.app.job_detail;
 
+import com.supervision.wms.app.job.model.Job;
 import com.supervision.wms.app.job_detail.model.JobDetail;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,17 +47,22 @@ public class JobDetailController {
         jobDetailService.deleteJobDetail(indexNo);
     }
 
-    @RequestMapping(value = "/get-all-job-detail-by-employee-and-new/{user}", method = RequestMethod.GET)
-    public List<JobDetail> getAllJobsDetailByEmployeeAndNew(@PathVariable int user) {
-        return jobDetailService.getAllJobsDetailByEmployee(user);
+    @RequestMapping(value = "/get-all-job-detail-by-user-and-status/{user}/{status}" , method = RequestMethod.GET)
+    public List<JobDetail> jobDetailService(@PathVariable int user , @PathVariable String status){
+        return jobDetailService.jobDetailService(user,status);
     }
-    @RequestMapping(value = "/get-all-job-detail-by-employee-and-running/{user}", method = RequestMethod.GET)
-    public List<JobDetail> getAllJobsDetailByEmployeeAndRunning(@PathVariable int user) {
-        return jobDetailService.getAllJobsDetailByEmployeeAndRunning(user);
-    }
-    @RequestMapping(value = "/get-all-job-detail-by-employee-and-finish/{user}", method = RequestMethod.GET)
-    public List<JobDetail> getAllJobsDetailByEmployeeAndFinish(@PathVariable int user) {
-        return jobDetailService.getAllJobsDetailByEmployeeAndFinish(user);
-    }
+    
+//    @RequestMapping(value = "/get-all-job-detail-by-employee-and-new/{user}", method = RequestMethod.GET)
+//    public List<JobDetail> getAllJobsDetailByEmployeeAndNew(@PathVariable int user) {
+//        return jobDetailService.getAllJobsDetailByEmployee(user);
+//    }
+//    @RequestMapping(value = "/get-all-job-detail-by-employee-and-running/{user}", method = RequestMethod.GET)
+//    public List<JobDetail> getAllJobsDetailByEmployeeAndRunning(@PathVariable int user) {
+//        return jobDetailService.getAllJobsDetailByEmployeeAndRunning(user);
+//    }
+//    @RequestMapping(value = "/get-all-job-detail-by-employee-and-finish/{user}", method = RequestMethod.GET)
+//    public List<JobDetail> getAllJobsDetailByEmployeeAndFinish(@PathVariable int user) {
+//        return jobDetailService.getAllJobsDetailByEmployeeAndFinish(user);
+//    }
 
 }

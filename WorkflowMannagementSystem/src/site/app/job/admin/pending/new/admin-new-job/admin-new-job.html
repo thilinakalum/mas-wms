@@ -1,0 +1,117 @@
+<div class="col-md-3 background-blue-dark">
+    <h4 class="text-center background-md-header"> JOBS</h4>
+</div>
+<div class="col-md-6 background-blue-light">
+    <h4 class="text-center background-md-header"> ADMIN NEW</h4>
+</div>
+<div class="col-md-3 background-blue-dark">
+    <h4 class="text-center background-md-header"> JOBS HISTORY</h4>
+</div>
+<div class="col-md-3 background-dark">
+    <div class="padding-top-10" style="height: calc(100vh - 94px);" >
+        <div class="input-group  padding-top-10">
+            <input type="text" class="form-control" placeholder="Search by category & department" >
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="button"><i class="glyphicon glyphicon-search"></i></button>
+            </span>
+        </div>
+        <div class="smart-scroll-y" style="height: calc(100vh - 172px);" ng-show="model.pendingJobList.length">
+            <table class="table table-hover" style="margin-top: 20px">
+                <tbody>
+                    <tr ng-repeat="jobs in model.pendingJobList| filter:{name:model.search.indexNo} | orderBy:'indexNo' ">
+                        <td class="col-sm-3" ng-click="ui.setDescription(jobs, $index)" ng-class="ui.selectedJobIndex === jobs.indexNo ? 'selected' : ''">
+                            <label class="control-label" style="margin-top: 5px">Job No : <span class="label label-info">{{jobs.indexNo}}</span></label>    
+                            <label class="control-label" style="margin-top: 5px">Status : <span><label class="control-label label-danger">{{jobs.status}}</label></span></label><br>
+                            <label class="control-label" style="margin-top: 5px">Required Date : {{jobs.requiredDate|date:'yyyy-MM-dd'}}</label><br>
+                            <label class="control-label" style="margin-top: 5px">Required Time : {{jobs.requiredTime|date:'h:mma'}}</label><br>
+                            <label class="control-label" style="margin-top: 5px">Send Department : {{ui.setDepartmentLabel(jobs.user)}}</label><br>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="hide-area background-dark" style="height: calc(100vh - 172px);" ng-hide="model.pendingJobList.length">
+            <h1>EMPTY JOBS :(</h1>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 background-white">
+    <div class="col-md-12" style="height: calc(100vh - 94px);">
+        <form ng-submit="ui.save()">
+            <div class="col-md-4 input-header-white">
+                <label class="control-label" style="margin-top: 9px">Department :</label>
+            </div>
+            <div class="col-md-8 input-header-white">
+                <input type="text" required class="form-control" ng-model="model.depatmentJobData.department" 
+                       uib-typeahead="department.indexNo as (department.indexNo + ' - ' + department.name) for department in model.departmentList |filter:$viewValue|limitTo:10" 
+                       typeahead-input-formatter="ui.departmentLable(model.depatmentJobData.department);"
+                       typeahead-editable="false">
+            </div>
+            <div class="col-md-4 input-header-white">
+                <label class="control-label" style="margin-top: 9px">Category :</label>
+            </div>
+            <div class="col-md-8 input-header-white">
+                <input type="text" required class="form-control" ng-model="model.depatmentJobData.category" 
+                       uib-typeahead="category.indexNo as (category.indexNo + ' - ' + category.name) for category in model.categoryList |filter:$viewValue|limitTo:10" 
+                       typeahead-input-formatter="model.categoryLable(model.depatmentJobData.category);"
+                       typeahead-editable="false"
+                       >
+            </div>
+            <div class="col-md-4 input-header-white">
+                <label class="control-label" style="margin-top: 9px">Required Date :</label>
+            </div>
+            <div class="col-md-8 input-header-white">
+                <input type="date" required class="form-control" ng-model="model.depatmentJobData.requiredDate">
+            </div>
+
+            <div class="col-md-4 input-header-white">
+                <label class="control-label"  style="margin-top: 9px">Required Time :</label>
+            </div>
+            <div class="col-md-8 input-header-white">
+                <input type="time" required class="form-control" ng-model="model.depatmentJobData.requiredTime">
+            </div>
+
+            <div class="col-md-4 input-header-white">
+                <label class="control-label" style="margin-top: 9px">Description :</label>
+            </div>
+            <div class="col-md-8 input-header-white">
+                <textarea class="form-control" style="height:13vh" required ng-model="model.depatmentJobData.clientDescription"></textarea>
+            </div>
+
+            <div class="row" style="height: 47px; border-top: 1px solid #cccccc">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-success btn-md pull-right" style="margin-top: 8px;border-radius: 0px" >
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Send Job
+                    </button>
+                    <button type="button" class="btn btn-primary btn-md pull-right" style="margin-right: 10px;margin-top: 8px;border-radius: 0px" ng-click="ui.clear()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true" ></span> Clear
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="col-md-3 background-dark">
+    <div class="padding-top-10 " style="height: calc(100vh - 94px);" >
+        <div class="smart-scroll-y" ng-show="model.transactionList.length">
+            <table class="table table-condensed" >
+                <tbody>
+                    <tr ng-repeat="jobTrans in model.transactionList| orderBy:'indexNo'">
+                        <td>
+                            <label class="label label-info" style="margin-top: 5px">Transaction No : <span class="control-label label-warning">{{jobTrans.indexNo|fixedLength:5}}</span></label>    
+                            <label class="label label-info" style="margin-top: 5px">Status : <span><label class="control-label label-danger">{{jobTrans.status}}</label></span></label><br>
+                            <label class="label label-info" style="margin-top: 5px">Date : {{jobTrans.date|date:'yyyy-MM-dd'}}</label>
+                            <label class="label label-info" style="margin-top: 5px">Time : {{jobTrans.time|date:'h:mma'}}</label><br>
+                            <label class="label label-info" style="margin-top: 5px">User : {{ui.userLabel(jobTrans.user)}}</label><br>
+                        </td>
+                    </tr>  
+                </tbody>
+            </table>
+        </div>
+        <div class="hide-area background-dark" style="height: calc(100vh - 130px);" ng-hide="model.transactionList.length">
+            <h1>EMPTY JOB HISTORY :(</h1>
+        </div>
+    </div>
+</div>
+
+

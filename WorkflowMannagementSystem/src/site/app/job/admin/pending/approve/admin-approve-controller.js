@@ -1,6 +1,6 @@
 (function () {
     angular.module("AppModule")
-            .controller("AdminHomeController", function ($scope, $rootScope, AdminHomeModel, Notification,Factory, $filter, $timeout) {
+            .controller("AdminHomeController", function ($scope,$location, $rootScope, AdminHomeModel, Notification,Factory, $filter, $timeout) {
                 $scope.model = new AdminHomeModel();
                 $scope.ui = {};
 
@@ -95,13 +95,46 @@
                                 Notification.error("Job Assign finish Fail !!!");
                             });
                 };
+                
+                $scope.ui.setDepartmentLabel = function (userIndexNo) {
+                    var departmentName;
+                    angular.forEach($scope.model.userList, function (value) {
+                    var department;
+                        if (value.indexNo === parseInt(userIndexNo)) {
+                            department = value.department;
+                              angular.forEach($scope.model.departmentList, function (value) {
+                                  if (value.indexNo === parseInt(department)) {
+                                      departmentName = value.name;
+                                      return;
+                                  }
+                              });
+                        }
+                    });
+                    return departmentName;
+                };
+                
+                $scope.ui.userLabel = function (userIndexNo){
+                    var userName;
+                    angular.forEach($scope.model.userList, function (value){
+                       if(value.indexNo === parseInt(userIndexNo)){
+                           userName = value.userName ;
+                           return ;
+                       }
+                    });
+                    return userName;
+                };
 
                 $scope.ui.init = function () {
-                    Factory.getCountList("/api/wms/count/get-all-count", function (data) {
-                        $rootScope.model.map = data;
-                    });
                     $scope.ui.mode = "unselect";
                     $scope.ui.mode1 = "unselect";
+                    if ($rootScope.globals.currentUser.type === 'ADMIN') {
+                        $location.path('/admin-approve');
+                    } else {
+                        $location.path('/');
+                    }
+                    Factory.getCountList("/api/wms/count/get-all-admin-count", function (data) {
+                        $rootScope.model.map = data;
+                    });
                 };
                 $scope.ui.init();
             });

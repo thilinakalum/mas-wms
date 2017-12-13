@@ -1,6 +1,6 @@
 (function () {
     angular.module("AppModule")
-            .controller("AdminRejectController", function ($scope, $rootScope, Notification, Factory) {
+            .controller("AdminRejectController", function ($scope, $location, $rootScope, Notification, Factory) {
                 $scope.model = {};
                 $scope.ui = {};
                 $scope.model.job = {};
@@ -9,7 +9,9 @@
                 $scope.listIndex = 0;
                 $scope.ui.mode = true;
 
-                var findAllUrl = "/api/wms/job/get-all-jobs-by-department-and-reject/" + 1;
+                var findAllUrl = "/api/wms/job/get-all-jobs-by-admin-and-status/" + 'REJECT';
+                var findAllUserUrl = "/api/wms/master/user/find-all-user";
+                var findAllDepartmentUrl = "/api/wms/master/department/find-all-department";
                 var findAllCodeUrl = "/api/wms/master/budget-code/find-all-budget-code";
                 var saveUrl = "/api/wms/job/save-jobs";
                 var findAllTransactionUrl = "/api/wms/job-transaction/get-all-job-transaction/";
@@ -24,6 +26,8 @@
                         $scope.ui.mode = false;
                         var detail = $scope.model.job;
                         detail.status = "UNAPPROVE";
+                        detail.user = $rootScope.globals.currentUser.indexNo;
+                        detail.branch = $rootScope.globals.currentUser.branch;
                         var detailJSON = JSON.stringify(detail);
                         console.log(detailJSON);
                         Factory.save(saveUrl, detailJSON,
@@ -68,10 +72,48 @@
                         $scope.model.transactionList = data;
                     });
                 };
+                $scope.ui.setDepartmentLabel = function (userIndexNo) {
+                    var departmentName;
+                    angular.forEach($scope.model.userList, function (value) {
+                        var department;
+                        if (value.indexNo === parseInt(userIndexNo)) {
+                            department = value.department;
+                            angular.forEach($scope.model.departmentList, function (value) {
+                                if (value.indexNo === parseInt(department)) {
+                                    departmentName = value.name;
+                                    return;
+                                }
+                            });
+                        }
+                    });
+                    return departmentName;
+                };
+
+                $scope.ui.userLabel = function (userIndexNo) {
+                    var userName;
+                    angular.forEach($scope.model.userList, function (value) {
+                        if (value.indexNo === parseInt(userIndexNo)) {
+                            userName = value.userName;
+                            return;
+                        }
+                    });
+                    return userName;
+                };
 
                 $scope.ui.init = function () {
-                    Factory.getCountList("/api/wms/count/get-all-count", function (data) {
+                    if ($rootScope.globals.currentUser.type === 'ADMIN') {
+                        $location.path('/admin-reject');
+                    } else {
+                        $location.path('/');
+                    }
+                    Factory.getCountList("/api/wms/count/get-all-admin-count", function (data) {
                         $rootScope.model.map = data;
+                    });
+                    Factory.findAll(findAllUserUrl, function (data) {
+                        $scope.model.userList = data;
+                    });
+                    Factory.findAll(findAllDepartmentUrl, function (data) {
+                        $scope.model.departmentList = data;
                     });
                     $scope.ui.mode = 'unselect';
                     Factory.findAll(findAllUrl, function (data) {

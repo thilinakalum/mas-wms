@@ -31,14 +31,17 @@ public class CountService {
     private final static String UNCOMFIRM="UNCOMFIRM";
     private final static String COMPLETED="COMPLETED";
     
-    private final static String WORKERNEW="WORKERNEW";
-    private final static String WORKERONGOING="WORKERONGOING";
-    private final static String WORKERFINISH="WORKERFINISH";
+    private final static String WORKER_NEW="NEW";
+    private final static String WORKER_ONGOING="ONGOING";
+    private final static String WORKER_FINISH="FINISH";
     
     @Autowired
     private CountRepository countRepository;
     
-    public HashMap<String, Integer> getAllCount() {
+    @Autowired
+    private CountDetailRepository countDetailRepository;
+    
+    public HashMap<String, Integer> getAllAdminCount() {
         
         HashMap<String, Integer> map = new HashMap<>();
         
@@ -69,14 +72,63 @@ public class CountService {
         Integer unconfirmCount = countRepository.findByStatus(UNCOMFIRM);
         map.put("UNCOMFIRM", unconfirmCount);
         
-        Integer workerNewCount = countRepository.findByStatus(WORKERNEW);
-        map.put("WORKERNEW", workerNewCount);
+//        Integer workerNewCount = countRepository.findByStatus(WORKERNEW);
+//        map.put("WORKERNEW", workerNewCount);
+//        
+//        Integer workerOngoingCount = countRepository.findByStatus(WORKERONGOING);
+//        map.put("WORKERONGOING", workerOngoingCount);
+//        
+//        Integer workerFinishCount = countRepository.findByStatus(WORKERFINISH);
+//        map.put("WORKERFINISH", workerFinishCount);
         
-        Integer workerOngoingCount = countRepository.findByStatus(WORKERONGOING);
-        map.put("WORKERONGOING", workerOngoingCount);
+        return map;
+    }
+    public HashMap<String, Integer> getAllDepartmentCount(int user) {
         
-        Integer workerFinishCount = countRepository.findByStatus(WORKERFINISH);
-        map.put("WORKERFINISH", workerFinishCount);
+        HashMap<String, Integer> map = new HashMap<>();
+        
+        Integer newCount = countRepository.findByStatusAndLoginUserDepartment(user ,NEW);
+        map.put("DEPARTMENT_NEW", newCount);
+        
+        Integer unApproveCount = countRepository.findByStatusAndLoginUserDepartment(user ,UNAPPROVE);
+        map.put("DEPARTMENT_UNAPPROVE", unApproveCount);
+        
+        Integer approveCount = countRepository.findByStatusAndLoginUserDepartment(user ,APPROVE);
+        map.put("DEPARTMENT_APPROVE", approveCount);
+        
+        Integer rejectCount = countRepository.findByStatusAndLoginUserDepartment(user ,REJECT);
+        map.put("DEPARTMENT_REJECT", rejectCount);
+        
+        Integer canselCount = countRepository.findByStatusAndLoginUserDepartment(user ,CANSEL);
+        map.put("DEPARTMENT_CANSEL", canselCount);
+        
+        Integer assignCount = countRepository.findByStatusAndLoginUserDepartment(user ,ASSIGN);
+        map.put("DEPARTMENT_ASSIGN", assignCount);
+        
+        Integer finishCount = countRepository.findByStatusAndLoginUserDepartment(user ,FINISH);
+        map.put("DEPARTMENT_FINISH", finishCount);
+        
+        Integer completedCount = countRepository.findByStatusAndLoginUserDepartment(user ,COMPLETED);
+        map.put("DEPARTMENT_COMPLETED", completedCount);
+
+        Integer unconfirmCount = countRepository.findByStatusAndLoginUserDepartment(user ,UNCOMFIRM);
+        map.put("DEPARTMENT_UNCOMFIRM", unconfirmCount);
+        
+        return map;
+    }
+
+    public HashMap<String, Integer> getAllWorkersCount(int user) {
+        
+        HashMap<String, Integer> map = new HashMap<>();
+        
+        Integer newCount = countDetailRepository.findByStatusAndLoginUserDepartment(user ,WORKER_NEW);
+        map.put("WORKER_NEW", newCount);
+        
+        Integer unApproveCount = countDetailRepository.findByStatusAndLoginUserDepartment(user ,WORKER_ONGOING);
+        map.put("WORKER_ONGOING", unApproveCount);
+        
+        Integer approveCount = countDetailRepository.findByStatusAndLoginUserDepartment(user ,WORKER_FINISH);
+        map.put("WORKER_FINISH", approveCount);
         
         return map;
     }

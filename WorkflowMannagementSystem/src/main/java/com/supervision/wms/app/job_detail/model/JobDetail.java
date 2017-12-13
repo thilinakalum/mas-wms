@@ -59,14 +59,13 @@ public class JobDetail implements Serializable {
     @Column(name = "job")
     private Integer job;
 
+    @Column(name = "user")
+    private Integer user;
+    
     @Column(name = "employee")
     private Integer employee;
 
     public JobDetail() {
-    }
-
-    public JobDetail(Integer indexNo) {
-        this.indexNo = indexNo;
     }
 
     public Integer getIndexNo() {
@@ -141,6 +140,14 @@ public class JobDetail implements Serializable {
         this.job = job;
     }
 
+    public Integer getUser() {
+        return user;
+    }
+
+    public void setUser(Integer user) {
+        this.user = user;
+    }
+
     public Integer getEmployee() {
         return employee;
     }
@@ -148,4 +155,10 @@ public class JobDetail implements Serializable {
     public void setEmployee(Integer employee) {
         this.employee = employee;
     }
+
+    @Override
+    public String toString() {
+        return "JobDetail{" + "indexNo=" + indexNo + ", requiredDate=" + requiredDate + ", requiredTime=" + requiredTime + ", deadlineDate=" + deadlineDate + ", deadlineTime=" + deadlineTime + ", adminDescription=" + adminDescription + ", status=" + status + ", date=" + date + ", job=" + job + ", user=" + user + ", employee=" + employee + '}';
+    }
+    
 }

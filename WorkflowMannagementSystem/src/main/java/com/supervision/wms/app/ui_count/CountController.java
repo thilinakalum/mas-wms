@@ -8,6 +8,7 @@ package com.supervision.wms.app.ui_count;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,9 +24,17 @@ public class CountController {
     @Autowired
     private CountService countService;
     
-     @RequestMapping(value = "/get-all-count" , method = RequestMethod.GET)
-    public HashMap<String, Integer> getAllCount(){
-        return countService.getAllCount();
+    @RequestMapping(value = "/get-all-admin-count" , method = RequestMethod.GET)
+    public HashMap<String, Integer> getAllAdminCount(){
+        return countService.getAllAdminCount();
+    }
+    @RequestMapping(value = "/get-all-department-count/{user}" , method = RequestMethod.GET)
+    public HashMap<String, Integer> getAllDepartmentCount(@PathVariable int user){
+        return countService.getAllDepartmentCount(user);
+    }
+    @RequestMapping(value = "/get-all-workers-count/{user}" , method = RequestMethod.GET)
+    public HashMap<String, Integer> getAllWorkersCount(@PathVariable int user){
+        return countService.getAllWorkersCount(user);
     }
 
 }

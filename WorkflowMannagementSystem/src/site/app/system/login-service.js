@@ -12,9 +12,9 @@ angular.module('AppModule')
 
             $rootScope.model = {
                 name: null,
-                password: null
+                password: null,
+                type: null
             };
-
 
             service.Login = function (username, password, callback) {
 
@@ -39,23 +39,25 @@ angular.module('AppModule')
                     'headers': headers
                 })
                         .success(function (response) {
-                            console.log(response)
+                            console.log(response);
                             callback(response);
                         })
                         .error(function (data) {
                             $rootScope.error = 'username or password is incorrect';
                         });
                 ;
-
             };
 
-            service.SetCredentials = function (username, password) {
+            service.SetCredentials = function (username, password, type, indexno, branch) {
                 var authdata = btoa(username + ":" + password); //$base64.encode(username + ':' + password);
 
                 $rootScope.globals = {
                     currentUser: {
                         username: username,
-                        authdata: authdata
+                        authdata: authdata,
+                        type: type,
+                        indexNo: indexno,
+                        branch: branch
                     }
                 };
 

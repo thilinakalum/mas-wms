@@ -59,7 +59,7 @@
                 <col style="width: 15%">
                 <col style="width: 20%">
                 <tbody>
-                    <tr ng-repeat="department in model.departmentList">
+                    <tr ng-repeat="department in model.departmentList | orderBy:'indexNo'">
                         <td>{{department.indexNo}}</td>
                         <td>{{department.name}}</td>
                         <td>{{department.description}}</td>

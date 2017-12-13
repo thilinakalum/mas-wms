@@ -1,9 +1,10 @@
 (function () {
-    var factory = function (AdminHomeJobService, AdminHomeModelFactory, $q, $filter) {
+    var factory = function (AdminHomeJobService, AdminHomeModelFactory, $q, $filter,$rootScope) {
 
         function AdminModel() {
             this.constructor();
-        };
+        }
+        ;
 
         AdminModel.prototype = {
             adminJobDetailData: {},
@@ -13,6 +14,8 @@
             newJobList: [],
             categoryList: [],
             employeeList: [],
+            userList: [],
+            departmentList: [],
             jobDetailList: [],
             jobItemList: [],
             itemList: [],
@@ -35,20 +38,29 @@
                 AdminHomeJobService.getAllEmployee()
                         .success(function (data) {
                             that.employeeList = data;
+                    console.log(data);
                         });
                 AdminHomeJobService.getAllItems()
                         .success(function (data) {
                             that.itemList = data;
                         });
+                AdminHomeJobService.getAllUsers()
+                        .success(function (data) {
+                            that.userList = data;
+                        });
+                AdminHomeJobService.getAllDepartments()
+                        .success(function (data) {
+                            that.departmentList = data;
+                        });
             },
-            jobTransactions : function (indexNo){
+            jobTransactions: function (indexNo) {
                 var that = this;
                 AdminHomeJobService.findAllTransaction(indexNo)
                         .success(function (data) {
-                           that.transactionList= data;
+                            that.transactionList = data;
                         })
                         .error(function () {
-                            
+
                         });
             },
             getSelectedJobDetailItem: function (indexNo) {
@@ -75,10 +87,9 @@
                 var that = this;
                 var defer = $q.defer();
                 that.adminJobItemData.jobDetail = that.adminJobDetailData.indexNo;
-                console.log(that.adminJobItemData);
+                that.adminJobItemData.user = $rootScope.globals.currentUser.indexNo;
                 AdminHomeJobService.saveJobItems(JSON.stringify(that.adminJobItemData))
                         .success(function (data) {
-                            console.log(data);
                             that.jobItemList.push(data);
                             that.totalItemPrice += data.totalPrice;
                             defer.resolve(data);
@@ -92,6 +103,8 @@
                 var that = this;
                 var defer = $q.defer();
                 that.selectedJob.status = 'ASSIGN';
+                that.selectedJob.user = $rootScope.globals.currentUser.indexNo;
+                that.selectedJob.branch = $rootScope.globals.currentUser.branch;
                 AdminHomeJobService.saveJobs(JSON.stringify(that.selectedJob))
                         .success(function (data) {
                             that.newJobList.splice(that.selectedJobIndex, 1);
@@ -154,6 +167,8 @@
                 var defer = $q.defer();
                 that.adminJobDetailData.status = "NEW";
                 that.adminJobDetailData.date = $filter('date')(new Date(), 'yyyy-MM-dd');
+                that.adminJobDetailData.user = $rootScope.globals.currentUser.indexNo;
+                console.log(that.adminJobDetailData);
                 AdminHomeJobService.saveJobDetail(JSON.stringify(that.adminJobDetailData))
                         .success(function (data) {
                             that.jobDetailList.push(data);

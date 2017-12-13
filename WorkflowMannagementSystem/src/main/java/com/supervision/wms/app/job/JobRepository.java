@@ -89,7 +89,6 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
             + "where job.`status`= 'COMPLETED' limit 10 ", nativeQuery = true)
     public List<Job> getAllJobsByFinish();
 
-    
     @Query(value = "select \n"
             + "job.*\n"
             + "from job\n"
@@ -100,5 +99,22 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
     public List<Job> getAllJobsByFinish(@Param("user") Integer user);
 
     public List<Job> getAllJobsByStatus(String finish);
+
+    public List<Job> findAllJobByStatus(String status);
+
+//    @Query(value = "select \n"
+//            + "job.*\n"
+//            + "from job\n"
+//            + "left join user on user.index_no=job.user\n"
+//            + "left join department on department.index_no=user.department\n"
+//            + "where department.index_no =(select user.department from user where user.index_no= :user )\n"
+//            + "and job.`status`= :status ", nativeQuery = true)
+//    public List<Job> findAllJobsByUserDepartmentAndStatus(@Param("user")int user,@Param("status") String status);
+    
+    @Query(value = "select \n"
+            + "job.*\n"
+            + "from job\n"
+            + "where job.`status`= :status and job.department = (select user.department from user where user.index_no= :user )", nativeQuery = true)
+    public List<Job> findAllJobsByUserDepartmentAndStatus(@Param("user") int user, @Param("status") String status);
 
 }

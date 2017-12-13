@@ -4,7 +4,7 @@
             return $http.post(systemConfig.apiUrl + "/api/wms/job/save-jobs", data);
         };
         this.getAllApproveJobs = function (logingUser) {
-            return $http.get(systemConfig.apiUrl + "/api/wms/job/get-all-jobs-by-department-and-approve/" + logingUser);
+            return $http.get(systemConfig.apiUrl + "/api/wms/job/get-all-jobs-by-admin-and-status/"+ 'APPROVE');
         };
         this.getAllNewJobs = function () {
             return $http.get(systemConfig.apiUrl + "/api/wms/job/get-all-new-jobs");
@@ -13,7 +13,7 @@
             return $http.get(systemConfig.apiUrl + "/api/wms/master/category/find-all-category");
         };
         this.getAllEmployee = function () {
-            return $http.get(systemConfig.apiUrl + "/api/wms/master/employee/find-all-employee");
+            return $http.get(systemConfig.apiUrl + "/api/wms/master/employee/find-all-employee-by-type");
         };
         this.getAllJobDetail = function (indexNo) {
             return $http.get(systemConfig.apiUrl + "/api/wms/job-detail/find-all-job-details-by-job/" + indexNo);
@@ -35,6 +35,12 @@
         };
         this.findAllTransaction = function (indexNo) {
             return $http.get(systemConfig.apiUrl + "/api/wms/job-transaction/get-all-job-transaction/" +indexNo);
+        };
+        this.getAllUsers = function () {
+            return $http.get(systemConfig.apiUrl + "/api/wms/master/user/find-all-user");
+        };
+        this.getAllDepartments = function () {
+            return $http.get(systemConfig.apiUrl + "/api/wms/master/department/find-all-department");
         };
     };
     angular.module("AppModule")

@@ -1,15 +1,19 @@
 (function () {
     angular.module("AppModule")
-            .controller("AdminNewController", function ($scope, $rootScope, Notification, Factory) {
+            .controller("AdminNewController", function ($scope, $location, $rootScope, Notification, Factory) {
                 $scope.model = {};
                 $scope.ui = {};
                 $scope.model.job = {};
                 $scope.model.newJobList = [];
                 $scope.model.budgetCodeList = [];
                 $scope.model.transactionList = [];
+                $scope.model.departmentList = [];
+                $scope.model.userList = [];
                 $scope.listIndex = 0;
 
-                var findAllUrl = "/api/wms/job/get-all-jobs-by-department-and-new/" + 1;
+                var findAllUrl = "/api/wms/job/get-all-jobs-by-admin-and-status/"+ 'NEW';
+                var findAllUserUrl = "/api/wms/master/user/find-all-user";
+                var findAllDepartmentUrl = "/api/wms/master/department/find-all-department";
                 var findAllCodeUrl = "/api/wms/master/budget-code/find-all-budget-code";
                 var saveUrl = "/api/wms/job/save-jobs";
                 var findAllTransactionUrl = "/api/wms/job-transaction/get-all-job-transaction/";
@@ -24,6 +28,8 @@
                     $scope.ui.mode = 'unselect';
                     var detail = $scope.model.job;
                     detail.status = "UNAPPROVE";
+                    detail.user = $rootScope.globals.currentUser.indexNo;
+                    detail.branch = $rootScope.globals.currentUser.branch;
                     var detailJSON = JSON.stringify(detail);
                     Factory.save(saveUrl, detailJSON,
                             function (data) {
@@ -58,18 +64,57 @@
                     });
                     return budgetCode;
                 };
+                
+                $scope.ui.setDepartmentLabel = function (userIndexNo) {
+                    var departmentName;
+                    angular.forEach($scope.model.userList, function (value) {
+                    var department;
+                        if (value.indexNo === parseInt(userIndexNo)) {
+                            department = value.department;
+                              angular.forEach($scope.model.departmentList, function (value) {
+                                  if (value.indexNo === parseInt(department)) {
+                                      departmentName = value.name;
+                                      return;
+                                  }
+                              });
+                        }
+                    });
+                    return departmentName;
+                };
+                
+                $scope.ui.userLabel = function (userIndexNo){
+                    var userName;
+                    angular.forEach($scope.model.userList, function (value){
+                       if(value.indexNo === parseInt(userIndexNo)){
+                           userName = value.userName ;
+                           return ;
+                       }
+                    });
+                    return userName;
+                };
 
                 $scope.ui.jobTransactions = function (indexNo) {
-                    Factory.findAll(findAllTransactionUrl+indexNo, function (data) {
+                    Factory.findAll(findAllTransactionUrl + indexNo, function (data) {
                         $scope.model.transactionList = data;
                     });
                 };
 
                 $scope.ui.init = function () {
-                    Factory.getCountList("/api/wms/count/get-all-count", function (data) {
+                    $scope.ui.mode = 'unselect';
+                    if ($rootScope.globals.currentUser.type === 'ADMIN') {
+                        $location.path('/admin-new');
+                    } else {
+                        $location.path('/');
+                    }
+                    Factory.getCountList("/api/wms/count/get-all-admin-count", function (data) {
                         $rootScope.model.map = data;
                     });
-                    $scope.ui.mode = 'unselect';
+                    Factory.findAll(findAllUserUrl, function (data) {
+                        $scope.model.userList = data;
+                    });
+                    Factory.findAll(findAllDepartmentUrl, function (data) {
+                        $scope.model.departmentList = data;
+                    });
                     Factory.findAll(findAllUrl, function (data) {
                         $scope.model.newJobList = data;
                     });
