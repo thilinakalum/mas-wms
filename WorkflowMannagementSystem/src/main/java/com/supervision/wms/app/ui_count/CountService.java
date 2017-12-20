@@ -28,7 +28,7 @@ public class CountService {
     private final static String ASSIGN="ASSIGN";
     private final static String FINISH="FINISH";
     
-    private final static String UNCOMFIRM="UNCOMFIRM";
+    private final static String UNCONFIRM="UNCONFIRM";
     private final static String COMPLETED="COMPLETED";
     
     private final static String WORKER_NEW="NEW";
@@ -69,8 +69,8 @@ public class CountService {
         Integer completedCount = countRepository.findByStatus(COMPLETED);
         map.put("COMPLETED", completedCount);
 
-        Integer unconfirmCount = countRepository.findByStatus(UNCOMFIRM);
-        map.put("UNCOMFIRM", unconfirmCount);
+        Integer unconfirmCount = countRepository.findByStatus(UNCONFIRM);
+        map.put("UNCONFIRM", unconfirmCount);
         
 //        Integer workerNewCount = countRepository.findByStatus(WORKERNEW);
 //        map.put("WORKERNEW", workerNewCount);
@@ -111,8 +111,8 @@ public class CountService {
         Integer completedCount = countRepository.findByStatusAndLoginUserDepartment(user ,COMPLETED);
         map.put("DEPARTMENT_COMPLETED", completedCount);
 
-        Integer unconfirmCount = countRepository.findByStatusAndLoginUserDepartment(user ,UNCOMFIRM);
-        map.put("DEPARTMENT_UNCOMFIRM", unconfirmCount);
+        Integer unconfirmCount = countRepository.findByStatusAndLoginUserDepartment(user ,UNCONFIRM);
+        map.put("DEPARTMENT_UNCONFIRM", unconfirmCount);
         
         return map;
     }

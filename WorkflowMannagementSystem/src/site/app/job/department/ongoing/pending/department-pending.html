@@ -1,16 +1,110 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<div class="col-md-3 background-blue-dark">
+    <h4 class="text-center background-md-header"> JOBS</h4>
+</div>
+<div class="col-md-6 background-blue-light">
+    <h4 class="text-center background-md-header"> ADMIN ASSIGN</h4>
+</div>
+<div class="col-md-3 background-blue-dark">
+    <h4 class="text-center background-md-header"> JOBS HISTORY</h4>
+</div>
+<div class="col-md-3 background-dark">
+    <div class="padding-top-10" style="height: calc(100vh - 94px);" >
+        <div class="input-group  padding-top-10">
+            <input type="text" class="form-control" placeholder="Search by category & department" >
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="button"><i class="glyphicon glyphicon-search"></i></button>
+            </span>
+        </div>
+        <div class="smart-scroll-y" style="height: calc(100vh - 172px);" ng-show="model.newJobList.length">
+            <table class="table table-hover" style="margin-top: 20px">
+                <tbody>
+                    <tr ng-repeat="jobs in model.newJobList| filter:{name:model.search.indexNo} | orderBy:'indexNo' ">
+                        <td class="col-sm-3" ng-click="ui.setDescription(jobs, $index)" ng-class="ui.selectedJobIndex === jobs.indexNo ? 'selected' : ''">
+                            <label class="control-label" style="margin-top: 5px">Job No : <span class="label label-info">{{jobs.indexNo}}</span></label>    
+                            <label class="control-label" style="margin-top: 5px">Status : <span><label class="control-label label-danger">{{jobs.status}}</label></span></label><br>
+                            <label class="control-label" style="margin-top: 5px">Required Date : {{jobs.requiredDate|date:'yyyy-MM-dd'}}</label><br>
+                            <label class="control-label" style="margin-top: 5px">Required Time : {{jobs.requiredTime|date:'h:mma'}}</label><br>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="hide-area background-dark" style="height: calc(100vh - 172px);" ng-hide="model.newJobList.length">
+            <h1>EMPTY JOBS :(</h1>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 background-white">
+    <div class="col-md-12 padding-top-10" style="height: calc(100vh - 94px);">
+        <div class="col-md-12">
+            <label class="control-label">Description :</label>
+            <textarea class="form-control" style="font-size: 20px; height: 13vh" readonly="true" ng-model="model.job.clientDescription"></textarea>
+        </div>
+        <div class="col-md-12 padding-top-10">
+            <table class="table" style="margin-bottom: 0px">
+                <col style="width: 25%">
+                <col style="width: 25%">
+                <col style="width: 25%">
+                <col style="width: 20%">
+                <col style="width: 10%">
+                <thead style="background-color: #eeeeee">
+                    <tr>
+                        <td>Name</td> 
+                        <td>DeadLine Date</td> 
+                        <td>DeadLine Time</td> 
+                        <td>Status</td> 
+                    </tr>
+                </thead>
+            </table>
+            <div style="height: calc(100vh - 305px)" ng-show="model.jobDetailList.length">
+                <table class="table" style="margin-bottom: 0px">
+                    <col style="width: 25%">
+                    <col style="width: 25%">
+                    <col style="width: 25%">
+                    <col style="width: 20%">
+                    <col style="width: 10%">
+                    <tbody>
+                        <tr ng-repeat="jobDetails in model.jobDetailList">
+                            <td>{{ui.employeeLable(jobDetails.employee)}}</td>
+                            <td>{{jobDetails.deadlineDate|date:'yyyy-MM-dd'}}</td>
+                            <td>{{jobDetails.deadlineTime|date:'h:mma'}}</td>
+                            <td><span ng-style = "{color: 'styleColor(jobDetails.status)'}" > {{jobDetails.status}} </span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="hide-area background-dark" style="height: calc(100vh - 305px)" ng-hide="model.jobDetailList.length">
+                <h1>NO ASSING JOBS TO EMPLOYEE :(</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-3 background-dark">
+    <div class="col-md-12 padding-top-10 " style="height: calc(100vh - 94px);" >
+        <div class="smart-scroll-y" ng-show="model.transactionList.length">
+            <table class="table table-condensed" >
+                <tbody>
+                    <tr ng-repeat="jobTrans in model.transactionList| orderBy:'indexNo'">
+                        <td>
+                            <label class="label label-info" style="margin-top: 5px">Transaction No : <span class="control-label label-warning">{{jobTrans.indexNo|fixedLength:5}}</span></label>    
+                            <label class="label label-info" style="margin-top: 5px">Status : <span><label class="control-label label-danger">{{jobTrans.status}}</label></span></label><br>
+                            <label class="label label-info" style="margin-top: 5px">Date : {{jobTrans.date|date:'yyyy-MM-dd'}}</label>
+                            <label class="label label-info" style="margin-top: 5px">Time : {{jobTrans.time|date:'h:mma'}}</label><br>
+                            <label class="label label-info" style="margin-top: 5px">User : {{model.employeeLable(jobTrans.user)}}</label><br>
+                        </td>
+                    </tr>  
+                </tbody>
+            </table>
+        </div>
+        <div class="hide-area background-dark" style="height: calc(100vh - 131px);" ng-hide="model.transactionList.length">
+            <h1>EMPTY JOB HISTORY :(</h1>
+        </div>
+    </div>
+<!--    <div class="col-md-12 background-dark">
+        <div class="col-md-12">
+            <span class="input-group-btn" >
+                <button ng-click="ui.finish()" class="col-lg-12 btn btn-success btn-md pull-right" style="height: 80px" type="button"><i class="glyphicon glyphicon-floppy-saved"></i><br>Finish</button>
+            </span>
+        </div>
+    </div>-->
+</div>

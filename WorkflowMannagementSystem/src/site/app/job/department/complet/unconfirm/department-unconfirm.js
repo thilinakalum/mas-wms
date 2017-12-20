@@ -13,7 +13,7 @@
                 $scope.ui.rejectReasonText = false;
                 $scope.ui.mode = true;
 
-                var findAllUrl = "/api/wms/job/get-all-jobs-department-send";
+                var findAllUrl = "/api/wms/job/get-all-jobs-by-department-and-status/" + $rootScope.globals.currentUser.indexNo + "/" + "UNCONFIRM";
                 var findAllSelectedJobDetailItemUrl = "/api/wms/job-items/get-all-item-by-job-detail/";
                 var findAllJobDetailUrl = "/api/wms/job-detail/find-all-job-details-by-job/";
                 var findAllEmployee = "/api/wms/master/employee/find-all-employee";

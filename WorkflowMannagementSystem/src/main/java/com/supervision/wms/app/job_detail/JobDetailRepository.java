@@ -35,9 +35,11 @@ public interface JobDetailRepository extends JpaRepository<JobDetail, Integer> {
             + "or job_detail.`status` ='ONGOING' ", nativeQuery = true)
     public List<JobDetail> getAllJobsByJobNoAndStatus(@Param("jobNo") int jobNo);
 
-    @Query(value = "select job_detail.*\n"
+    @Query(value = "select job_detail.* \n"
             + "from job_detail \n"
-            + " where employee = :user \n"
-            + " and `status` = :status ", nativeQuery = true)
-    public List<JobDetail> jobDetailService(@Param("user") int user,@Param("status")  String status);
+            + "left JOIN employee on employee.index_no = job_detail.employee \n"
+            + "left JOIN user on user.employee=employee.index_no \n"
+            + "where user.index_no = :user \n"
+            + "and job_detail.`status` = :status ", nativeQuery = true)
+    public List<JobDetail> jobDetailService(@Param("user") int user, @Param("status") String status);
 }

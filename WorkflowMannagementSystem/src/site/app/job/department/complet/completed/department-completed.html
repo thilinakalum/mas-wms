@@ -78,28 +78,15 @@
             </div>
             <div class="col-md-6" style="margin-top: 0px"></div>
             <div class="col-md-6" style="margin-top: 0px">
-                <button type="button" ng-click="ui.reject()" class=" col-md-6 btn btn-warning btn-md " style="border-radius: 0px" ng-click="ui.reject()">
-                    <span class="glyphicon glyphicon-refresh" aria-hidden="true" ></span> Reject
-                </button>
-                <button type="button" class="col-md-6 btn btn-success btn-md " style="border-radius: 0px" ng-click="ui.approve()">
-                    <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Approve
-                </button>
             </div>
             <div class="col-md-12" ng-show="ui.rejectReasonText" style="height: 155px;">
                 <div>
                     <label class="control-label" > Reason :</label>
-                    <textarea class="form-control" style="font-size: 15px; height: 10vh" ng-model="model.job.reason"></textarea>
+                    <textarea class="form-control" style="font-size: 15px; height: 10vh"ng-model="model.job.reason"></textarea>
                 </div>
                 <div class="col-md-4" style="margin-top: 12px"></div>
                 <div class="col-md-4" style="margin-top: 12px"></div>
-                <div class="col-md-4" style="margin-top: 12px">
-                    <button type="button" ng-click="ui.cansel()" class=" col-md-6 btn btn-danger btn-md " style="border-radius: 0px" ng-click="ui.clear()">
-                        <span class="glyphicon glyphicon-refresh" aria-hidden="true" ></span> Cansel
-                    </button>
-                    <button type="button" class="col-md-6 btn btn-success btn-md " style="border-radius: 0px" ng-click="ui.saveRejectReason()">
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Send
-                    </button>
-                </div>
+                <div class="col-md-4" style="margin-top: 12px"></div>
             </div>
         </div>
     </div>

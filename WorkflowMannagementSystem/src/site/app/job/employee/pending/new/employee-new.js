@@ -28,7 +28,6 @@
                     var detail = $scope.model.jobDetailData;
                     detail.status = "ONGOING";
                     var detailJSON = JSON.stringify(detail);
-                    console.log(detailJSON);
                     Factory.save(saveUrl, detailJSON,
                             function (data) {
                                 Notification.success(data.indexNo + " - " + "Job Start Success");
@@ -113,15 +112,12 @@
                     $scope.ui.mode = "unselect";
                     Factory.findAll(findAllUrl, function (data) {
                         $scope.model.newJobList = data;
-                        console.log(data);
                     });
                     Factory.findAll(findAllEmployeeUrl, function (data) {
                         $scope.model.employeeList = data;
-                        console.log(data);
                     });
                     Factory.findAll(findAllItemUrl, function (data) {
                         $scope.model.itemList = data;
-                        console.log(data);
                     });
                 };
                 $scope.ui.init();

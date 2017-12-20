@@ -95,17 +95,17 @@
                         <li ng-show="globals.currentUser.type === 'ADMIN'">
                             <a href="javascript:;">
                                 <span>Completed<i></i></span>
-                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']+model.map['COMPLETED']===0?'':model.map['UNCOMFIRM']+model.map['COMPLETED']}}</label></span>
+                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['UNCONFIRM']+model.map['COMPLETED']===0?'':model.map['UNCONFIRM']+model.map['COMPLETED']}}</label></span>
                             </a>
                             <ul class="sub-menu">
                                 <li>
                                     <a href="#/admin-department-send">
                                         <span>Department Send</span>
-                                        <span> <label class="label label-lg label-primary" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']===0?'':model.map['UNCOMFIRM']}}</label></span>
+                                        <span> <label class="label label-lg label-primary" style=" border-radius: 100px;">{{model.map['UNCONFIRM']===0?'':model.map['UNCONFIRM']}}</label></span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#/department-confirm">
+                                    <a href="#/admin-completed">
                                         <span>Completed</span>
                                         <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['COMPLETED']===0?'':model.map['COMPLETED']}}</label></span>
                                     </a>
@@ -150,24 +150,32 @@
                         <li ng-show="globals.currentUser.type === 'USER'">
                             <a href="javascript:;">
                                 <span>On Going<i></i></span>
-                                <span> <label class="label label-lg label-warning" style=" border-radius: 100px;"></label></span>
+                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['DEPARTMENT_ASSIGN']===0?'':model.map['DEPARTMENT_ASSIGN']}}</label></span>
                             </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="#/department-pending">
+                                        <span>ASSIGN</span>
+                                        <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['DEPARTMENT_ASSIGN']===0?'':model.map['DEPARTMENT_ASSIGN']}}</label></span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
                         <li ng-show="globals.currentUser.type === 'USER'">
                             <a href="javascript:;">
                                 <span>Completed<i></i></span>
-                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']+model.map['COMPLETED']===0?'':model.map['UNCOMFIRM']+model.map['COMPLETED']}}</label></span>
+                                <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['DEPARTMENT_UNCONFIRM']+model.map['DEPARTMENT_COMPLETED']===0?'':model.map['DEPARTMENT_UNCONFIRM']+model.map['DEPARTMENT_COMPLETED']}}</label></span>
                             </a>
                             <ul class="sub-menu">
                                 <li>
                                     <a href="#/department-unconfirm">
                                         <span>Unconfirmed</span>
-                                        <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['UNCOMFIRM']===0?'':model.map['UNCOMFIRM']}}</label></span>
+                                        <span> <label class="label label-lg label-danger" style=" border-radius: 100px;">{{model.map['DEPARTMENT_UNCONFIRM']===0?'':model.map['DEPARTMENT_UNCONFIRM']}}</label></span>
                                     </a>
                                     <a href="#/department-confirm">
                                         <span>Completed</span>
-                                        <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['COMPLETED']===0?'':model.map['COMPLETED']}}</label></span>
+                                        <span> <label class="label label-lg label-success" style=" border-radius: 100px;">{{model.map['DEPARTMENT_COMPLETED']===0?'':model.map['DEPARTMENT_COMPLETED']}}</label></span>
                                     </a>
                                 </li>
                             </ul>

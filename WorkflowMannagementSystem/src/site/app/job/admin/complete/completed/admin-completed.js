@@ -8,7 +8,7 @@
                 $scope.model.budgetCodeList = [];
                 $scope.listIndex = 0;
 
-                var findAllUrl = "/api/wms/job/get-all-jobs-by-department-and-completed";
+                var findAllUrl = "/api/wms/job/get-all-jobs-by-admin-and-status/" + 'COMPLETED';
                 var saveUrl = "/api/wms/job/save-jobs";
 
                 $scope.ui.reset = function () {

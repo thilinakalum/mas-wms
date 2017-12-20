@@ -11,7 +11,7 @@
                 $scope.listIndex = 0;
                 $scope.ui.mode = true;
 
-                var findAllUrl = "/api/wms/job/get-all-jobs-by-department-and-assing/" + 1;
+                var findAllUrl = "/api/wms/job/get-all-jobs-by-admin-and-status/" + 'ASSIGN';
                 var findAllJobDetailByJobNoUrl = "/api/wms/job-detail/find-all-job-details-by-job/";
                 var saveUrl = "/api/wms/job/save-jobs";
                 var FindAllEmployeeUrl = "/api/wms/master/employee/find-all-employee";

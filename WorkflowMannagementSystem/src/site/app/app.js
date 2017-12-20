@@ -109,9 +109,9 @@
                             templateUrl: "app/job/department/complet/unconfirm/department-unconfirm.html",
                             controller: "DepatmentUnconfirmController"
                         })
-                        .when("/department-unconfirm", {
-                            templateUrl: "app/job/department/complet/unconfirm/department-unconfirm.html",
-                            controller: "DepatmentUnconfirmController"
+                        .when("/department-pending", {
+                            templateUrl: "app/job/department/ongoing/pending/department-pending.html",
+                            controller: "DepartmentPendingController"
                         })
                         .when("/department-confirm", {
                             templateUrl: "app/job/department/complet/completed/department-completed.html",
@@ -227,7 +227,7 @@
 //                    counter function 
                     $scope.time = 0;
                     var timer = function () {
-                        if ($scope.time === 60) {
+                        if ($scope.time === 15) {
                             if (angular.isUndefined($rootScope.globals.currentUser)) {
                                 console.log("Console undifind");
                             } else {
@@ -247,14 +247,14 @@
                             }
                             $scope.time = 0;
                         }
-                        if ($scope.time < 60) {
+                        if ($scope.time < 15) {
                             $scope.time += 1;
-                            $timeout(timer, 1000);
+                            $timeout(timer, 250);
                         }
                     };
 
                     //call time
-                    $timeout(timer, 1000);
+                    $timeout(timer, 250);
                 };
                 $scope.ui.init();
             });

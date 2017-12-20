@@ -63,6 +63,7 @@
                                     $rootScope.model.map.UNAPPROVE -= 1;
                                     $scope.ui.reset();
                                     $scope.ui.mode = true;
+                                    $scope.ui.canselReasonText = false;
                                 },
                                 function (data) {
                                     Notification.error(data.message);
@@ -86,8 +87,10 @@
                                     $rootScope.model.map.UNAPPROVE -= 1;
                                     $scope.ui.reset();
                                     $scope.ui.mode = true;
+                                    $scope.ui.rejectReasonText = false;
                                 },
                                 function (data) {
+                                    $scope.ui.canselReasonText = false;
                                     Notification.error(data.message);
                                     $scope.ui.mode = true;
                                 }

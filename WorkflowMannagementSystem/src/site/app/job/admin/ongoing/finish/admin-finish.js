@@ -12,7 +12,7 @@
                 $scope.listIndex = 0;
                 $scope.ui.mode = true;
 
-                var findAllUrl = "/api/wms/job/get-all-jobs-by-finish";
+                var findAllUrl = "/api/wms/job/get-all-jobs-by-admin-and-status/" + 'FINISH';
                 var findAllSelectedJobDetailItemUrl = "/api/wms/job-items/get-all-item-by-job-detail/";
                 var findAllJobDetailUrl = "/api/wms/job-detail/find-all-job-details-by-job/";
                 var findAllEmployee = "/api/wms/master/employee/find-all-employee";
@@ -29,7 +29,7 @@
                     if ($scope.ui.mode) {
                         $scope.ui.mode = false;
                         var detail = $scope.model.job;
-                        detail.status = "UNCOMFIRM";
+                        detail.status = "UNCONFIRM";
                         var detailJSON = JSON.stringify(detail);
                         Factory.save(saveUrl, detailJSON,
                                 function (data) {
