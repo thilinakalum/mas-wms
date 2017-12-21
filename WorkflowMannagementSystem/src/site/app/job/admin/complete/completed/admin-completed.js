@@ -10,7 +10,13 @@
 
                 var findAllUrl = "/api/wms/job/get-all-jobs-by-admin-and-status/" + 'COMPLETED';
                 var saveUrl = "/api/wms/job/save-jobs";
+                var findAllTransactionUrl = "/api/wms/job-transaction/get-all-job-transaction/";
 
+                $scope.ui.jobTransactions = function (indexNo) {
+                    Factory.findAll(findAllTransactionUrl+indexNo, function (data) {
+                        $scope.model.transactionList = data;
+                    });
+                };
                 $scope.ui.reset = function () {
                     $scope.model.job = {};
                     $scope.ui.selectedJobIndex = null;
@@ -20,6 +26,7 @@
                     $scope.listIndex = index;
                     $scope.ui.selectedJobIndex = job.indexNo;
                     $scope.model.job = job;
+                    $scope.ui.jobTransactions(job.indexNo);
 //                    $scope.model.job.description = job.clientDescription;
                 };
 

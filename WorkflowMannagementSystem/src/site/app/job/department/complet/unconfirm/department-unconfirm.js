@@ -19,10 +19,18 @@
                 var findAllEmployee = "/api/wms/master/employee/find-all-employee";
                 var findAllItem = "/api/wms/master/item/find-all-item";
                 var saveUrl = "/api/wms/job/save-jobs";
+                var findAllTransactionUrl = "/api/wms/job-transaction/get-all-job-transaction/";
+
+                $scope.ui.jobTransactions = function (indexNo) {
+                    Factory.findAll(findAllTransactionUrl+indexNo, function (data) {
+                        $scope.model.transactionList = data;
+                    });
+                };
 
                 $scope.ui.reset = function () {
                     $scope.model.job = {};
                     $scope.listIndex = null;
+                    $scope.description={};
                 };
 
                 $scope.ui.reject = function () {
@@ -59,6 +67,7 @@
                     $scope.model.job = job;
                     $scope.model.getAllJobDetail(job.indexNo);
                     $scope.description = job.clientDescription;
+                    $scope.ui.jobTransactions(job.indexNo);
                 };
                 $scope.ui.selectedJobDetails = function (jobDetail) {
                     $scope.ui.selectedDetailIndex = jobDetail.indexNo;
